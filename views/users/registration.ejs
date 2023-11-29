@@ -1,0 +1,28 @@
+<%- include('../layouts/header.ejs') %>
+
+<h1>ChronoSneaks</h1>
+<form action="" method="post">
+    <input type="text" name="name" placeholder="Enter your name" required>
+    <br><br>
+    <input type="email" name="email" placeholder="Enter your email" required>
+    <br><br>
+    <input type="tel" name="mno" placeholder="Enter your mobile number" required>
+    <br><br>
+    <input type="password" name="password" placeholder="Enter your password" required>
+    <br><br>
+    <input type="submit" value="Register">
+</form>
+
+
+<% 
+
+if(typeof message !== 'undefined'){
+    %>
+    <p style="color: rgb(42, 165, 99);"><%= message %></p>
+    <%
+
+}
+
+%>
+
+<%- include('../layouts/footer.ejs') %>
