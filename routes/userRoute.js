@@ -40,4 +40,9 @@ user_route.get('/home',auth.isLogin,userController.loadHome)
 
 //logout
 user_route.get('/logout',auth.isLogin,userController.userLogout)
+
+//user edit
+user_route.get('/edit',auth.isLogin,userController.editLoad)
+user_route.post('/edit',userController.updateProfile)
+
 module.exports = user_route
