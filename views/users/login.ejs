@@ -1,0 +1,22 @@
+<%- include('../layouts/header.ejs') %>
+
+<h1>Login at ChronoSneaks</h1>
+
+<%
+    if(typeof message !== 'undefined'){
+        %>
+        <h4><%= message %></h4>
+        <%
+    }
+%>
+
+<form action="/login" method="post">
+    <input type="email" name="email" placeholder="Enter you email" required>
+    <br><br>
+    <input type="password" name="password" placeholder="Enter your password" required>
+    <br><br>
+    <input type="submit" value="Login">
+    <p>Not a user? <a href="/register">signup</a></p>
+</form>
+
+<%- include('../layouts/footer.ejs') %>

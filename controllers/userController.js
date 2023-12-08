@@ -108,8 +108,80 @@ const verifyMail = async(req,res)=>{
     }
 }
 //end
+
+//user login
+
+const loginLoad = async(req,res)=>{
+    try {
+        res.render('login')
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+//login verify
+const verifyLogin = async(req,res)=>{
+    try {
+
+        const email = req.body.email
+        const password = req.body.password
+
+        const userData = await User.findOne({email:email})
+        if(userData){
+
+            const passwordMatch = await bcrypt.compare(password,userData.password)
+            if(passwordMatch){
+                if(userData.is_verified === 0){
+                    res.render('login',{message:"Please verify your email"})
+                }else{
+                    req.session.user_id = userData._id
+                    res.redirect('/home')
+                }
+            } else {
+                res.render('login',{message:"Check your email and password"})
+            }
+
+        }else {
+            res.render('login',{message:"Check your email and password"})
+        }
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+//for user home
+const loadHome = async(req,res)=>{
+    try {
+
+        //user data - 7/12/23
+        const userData = await User.findById({ _id:req.session.user_id})
+        
+        res.render('home',{ user:userData })
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+//user logout
+const userLogout = async(req,res)=>{
+   try {
+    
+    req.session.destroy()
+    res.redirect('/')
+
+   } catch (error) {
+        console.log(error.message);
+   } 
+}
+
 module.exports = {
     loadRegister,
     insertUser,
-    verifyMail
+    verifyMail,
+    loginLoad,
+    verifyLogin,
+    loadHome,
+    userLogout
 }
