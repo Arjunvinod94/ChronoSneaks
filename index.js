@@ -12,6 +12,10 @@ app.use(nocache());
 const userRoute = require('./routes/userRoute')
 app.use('/',userRoute)
 
+//for amdin routes
+const adminRoute = require('./routes/adminRoute')
+app.use('/admin',adminRoute)
+
 app.listen(3000,()=>{
     console.log("Server started");
 })
