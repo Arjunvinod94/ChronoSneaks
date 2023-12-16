@@ -64,37 +64,48 @@ const loadRegister = async(req,res)=>{
     }
 }
 
+// Insert User
+
 const insertUser = async(req,res)=>{
+    try {
+        const email = req.body.email
+        const mobile = req.body.mno
+        const existingUser = await User.findOne({$or:[{email:email},{mobile:mobile}]})
+        if(existingUser){
+            res.render('registration',{errorMessage:"User Already Exist"})
+        }else{
+            const password = req.body.password
+        const confirmPassword = req.body.confirmPassword
 
-try{
-    const spassword = await securePassword(req.body.password)
-    const user = new User({
-        name:req.body.name,
-        email:req.body.email,
-        mobile:req.body.mno,
-        password:spassword,
-        is_admin:0,
-    })
+        if(password === confirmPassword){
+            const spassword = await securePassword(req.body.password)
+            const user = new User({
+                        name:req.body.name,
+                        email:req.body.email,
+                        mobile:req.body.mno,
+                        password:spassword,
+                        is_admin:0,
+                    })
+                    const userData = await user.save()
+                    if(userData) {
 
-    const userData = await user.save()
+                        //email verification
+                
+                        sendVerifyMail(req.body.name, req.body.email, userData._id)
+                
+                        res.render('registration',{message:"Your registration has been successfull. Please verify your email"})
+                    } else {
+                        res.render('registration',{errorMessage:"Your registration has been failed"})
+                    }
+        }else{
+            res.render('registration',{errorMessage:"Password Doesn't Match"})
+        }
+        }
+        
 
-    if(userData) {
-
-        //email verification
-
-        sendVerifyMail(req.body.name, req.body.email, userData._id)
-
-        //end
-
-        res.render('registration',{message:"Your registration has been successfull. Please verify your email"})
-    } else {
-        res.render('registration',{message:"Your registration has been failed"})
+    } catch (error) {
+        console.log(error.message);
     }
-
-} catch(error) {
-    console.log(error.message);
-}
-
 }
 
 //for emailVerification
