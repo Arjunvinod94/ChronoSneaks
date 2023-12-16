@@ -18,6 +18,9 @@ const path = require('path')
 const auth = require('../middleware/adminAuth')
 
 const adminController = require('../controllers/adminController')
+const categoryController = require('../controllers/categoryController')
+const productController = require('../controllers/productController')
+
 
 //admin login
 admin_route.get('/',auth.isLogout,adminController.loadLogin)

@@ -1,5 +1,11 @@
 const sessionSecret = "abc"
 
+const emailUser = "chronosneaks@gmail.com"
+const emailPassword = 'fnpn eqbf ikiv spaw'
+
+
 module.exports = {
-    sessionSecret
+    sessionSecret,
+    emailUser,
+    emailPassword
 }

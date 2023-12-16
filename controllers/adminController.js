@@ -121,8 +121,9 @@ const logout = async(req,res)=>{
 // admin dashboard for user management
 const adminDashboard = async(req,res)=>{
     try {
+        const userData = await User.findById({_id:req.session.user_id})
         const usersData = await User.find({is_admin:0})
-        res.render('dashboard',{users:usersData})
+        res.render('dashboard',{users:usersData,admin:userData})
     } catch (error) {
         console.log(error.message);
     }
@@ -131,7 +132,8 @@ const adminDashboard = async(req,res)=>{
 //admin add new user(get)
 const newUserLoad = async(req,res)=>{
     try {
-        res.render('new-user')
+        const userData = await User.findById({_id:req.session.user_id})
+        res.render('new-user',{admin:userData})
     } catch (error) {
         console.log(error.message);
     }
@@ -175,9 +177,11 @@ const addUser = async(req,res)=>{
 const editUserLoad = async(req,res)=>{
     try {
         const id = req.query.id
-        const userData = await User.findById({_id:id})
+
+        const adminData = await User.findById({_id:req.session.user_id})
+        const userData = await User.findById({_id:id,})
         if(userData){
-            res.render('edit-user',{user:userData})
+            res.render('edit-user',{user:userData, admin:adminData})
         }else{
             res.redirect('/admin/dashboard')
         }
