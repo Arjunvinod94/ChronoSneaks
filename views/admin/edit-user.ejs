@@ -19,7 +19,9 @@
     <input type="radio" name="verify" value="0" <% if(user.is_verified == 0){ %> checked <%} %> >
     <br><br>
     <input type="hidden" name="id" value="<%= user._id %>">
-    <input type="submit" value="Update User">
+    <input type="submit" value="Update User" onclick="confirmUpdateUser(event)">
 
 </form>
 </div>
+
+<script src="/js/alertPopUp.js"></script>

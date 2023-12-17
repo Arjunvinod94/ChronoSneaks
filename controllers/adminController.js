@@ -217,6 +217,27 @@ const deleteUser = async(req,res)=>{
     }
 }
 
+// block/unblock user
+const blockUnblockUser = async(req,res)=>{
+    try {
+        
+        const id = req.query.id
+        const userData = await User.findOne({_id:id})
+
+        if(!userData){
+            res.render('404',{message:'User not found'})
+        }else{
+            const updatedStatus = !userData.status
+            const updatedUser = await User.updateOne({_id:id},{$set:{status:updatedStatus}})
+            res.redirect('/admin/dashboard')
+        }
+
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 module.exports = {
     loadLogin,
@@ -228,5 +249,6 @@ module.exports = {
     addUser,
     editUserLoad,
     updateUsers,
-    deleteUser
+    deleteUser,
+    blockUnblockUser
 }

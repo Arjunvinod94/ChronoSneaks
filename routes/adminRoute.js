@@ -45,6 +45,9 @@ admin_route.post('/edit-user',adminController.updateUsers)
 //delete user
 admin_route.get('/delete-user',adminController.deleteUser)
 
+//block-unblock user
+admin_route.get('/block-unblock-user',auth.isLogin,adminController.blockUnblockUser)
+
 //always loaad admin when wrong route is entered (used last)
 admin_route.get('*',(req,res)=>{
     res.redirect('/admin')

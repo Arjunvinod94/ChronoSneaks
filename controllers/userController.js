@@ -147,8 +147,12 @@ const verifyLogin = async(req,res)=>{
                 if(userData.is_verified === 0){
                     res.render('login',{message:"Please verify your email"})
                 }else{
-                    req.session.user_id = userData._id
-                    res.redirect('/home')
+                        if(userData.status.toString() === 'false'){
+                            res.render('login',{message:'The user is temporarily restricted'})
+                        } else {
+                            req.session.user_id = userData._id
+                            res.redirect('/home')
+                        }
                 }
             } else {
                 res.render('login',{message:"Check your email and password"})

@@ -10,7 +10,7 @@
     <h1>Dashboard</h1>
 </div>
 
-<button><a href="/admin/new-user">Add User</a></button>
+<a href="/admin/new-user" class="btn btn-outline-primary">Add User</a>
 <br><br>
 
 <table style="width: 50%;">
@@ -46,8 +46,17 @@
                     </td>
 
                     <td>
-                        <button><a href="/admin/edit-user?id=<%= users[i]._id %>">Edit</a></button>
-                        <button><a href="/admin/delete-user?id=<%= users[i]._id %>">Delete</a></button>
+                        <a href="/admin/edit-user?id=<%= users[i]._id %>" class="btn btn-outline-success">Edit</a>
+                        
+                        <!-- <a href="/admin/block-unblock-user?id=<%= users[i]._id%>" class="btn <%= users[i].status.toString() === 'true' ? 'btn-outline-danger' : 'btn-outline-success' %>" onclick="confirmBlockUnblock('<%= users[i]._id %>','<%= users[i].status.toString() %>')">
+                             <%= users[i].status.toString() === 'true'? 'Block' : 'Unblock' %> </a> -->
+                             <a href="/admin/block-unblock-user?id=<%= users[i]._id%>" class="btn <%= users[i].status.toString() === 'true' ? 'btn-outline-danger' : 'btn-outline-success' %>" onclick="confirmBlockUnblock('<%= users[i]._id %>','<%= users[i].status.toString() %>', event)">
+                                <%= users[i].status.toString() === 'true'? 'Block' : 'Unblock' %>
+                              </a>
+                                                                                                                
+                        
+
+                        <!-- <button><a href="/admin/delete-user?id=<%= users[i]._id %>">Delete</a></button> -->
                     </td>
 
                 </tr>
@@ -65,3 +74,4 @@
     %>
 
 </table>
+<script src="/js/alertPopUp.js"></script>
