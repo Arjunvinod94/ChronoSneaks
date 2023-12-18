@@ -2,6 +2,7 @@ const User = require('../models/userModel')
 const bcrypt = require("bcrypt")
 const randomstring = require('randomstring')
 const nodemailer = require("nodemailer")
+const UserOTPVerification = require('../models/userOtpVerification') 
 
 const config = require('../config/config')
 
@@ -19,10 +20,45 @@ const securePassword = async(password)=>{
 
 //for send mail
 
-const sendVerifyMail = async(name, email, user_id)=>{
+// const sendVerifyMail = async(name, email, user_id)=>{
 
-    try {
+//     try {
         
+//         const transporter = nodemailer.createTransport({
+//             host:'smtp.gmail.com',
+//             port:587,
+//             secure:false,
+//             requireTLS:true,
+//             auth:{
+//                 user: config.emailUser,
+//                 pass: config.emailPassword
+//             }
+//         })
+//         const mailOptions = {
+//             from: config.emailUser,
+//             to: email,
+//             subject: 'For Verifying the mail',
+//             html: '<p>Hi '+name+', here is your link for the verification of ChronoSneaks <a href = "http://localhost:3000/verify?id='+user_id+'"> Verify </a></p>',
+//         }
+//         transporter.sendMail(mailOptions, (error,info)=>{
+//             if(error){
+//                 console.log(error);
+//             } else {
+//                 console.log("Email has been sent",info.response);
+//             }
+//         })
+
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
+
+//otp mail
+const generateOTP = ()=>{
+    return Math.floor(1000 + Math.random() * 9000).toString()
+}
+const sendOTPMail = async(email, otpCode)=>{
+    try {
         const transporter = nodemailer.createTransport({
             host:'smtp.gmail.com',
             port:587,
@@ -37,7 +73,7 @@ const sendVerifyMail = async(name, email, user_id)=>{
             from: config.emailUser,
             to: email,
             subject: 'For Verifying the mail',
-            html: '<p>Hi '+name+', here is your link for the verification of ChronoSneaks <a href = "http://localhost:3000/verify?id='+user_id+'"> Verify </a></p>',
+            text: `Here is your OTP for ChronoSneaks registration : ${otpCode}`,
         }
         transporter.sendMail(mailOptions, (error,info)=>{
             if(error){
@@ -46,13 +82,23 @@ const sendVerifyMail = async(name, email, user_id)=>{
                 console.log("Email has been sent",info.response);
             }
         })
+    } catch (error) {
+        
+    }
+}
+const generateAndSendOTP = async (email) => {
+    try {
+        const otpCode = generateOTP()
+        const otpExpiration = new Date(Date.now() + 600000)
 
+        await UserOTPVerification.updateOne({ email }, { otpCode, otpExpiration }, { upsert: true })
+        sendOTPMail(email, otpCode)
     } catch (error) {
         console.log(error.message);
     }
+
 }
 
-//end
 
 const loadRegister = async(req,res)=>{
     try{
@@ -90,10 +136,12 @@ const insertUser = async(req,res)=>{
                     if(userData) {
 
                         //email verification
+                        // sendVerifyMail(req.body.name, req.body.email, userData._id)
+
+                        //otp
+                        generateAndSendOTP(req.body.email)
                 
-                        sendVerifyMail(req.body.name, req.body.email, userData._id)
-                
-                        res.render('registration',{message:"Your registration has been successfull. Please verify your email"})
+                        res.redirect(`/verifyOTP?_id=${userData._id}&email=${userData.email}`)
                     } else {
                         res.render('registration',{errorMessage:"Your registration has been failed"})
                     }
@@ -109,18 +157,48 @@ const insertUser = async(req,res)=>{
 }
 
 //for emailVerification
-const verifyMail = async(req,res)=>{
-    try {
+// const verifyMail = async(req,res)=>{
+//     try {
         
-        const updatedInfo = await User.updateOne({_id:req.query.id},{$set:{is_verified:1}})
-        console.log(updatedInfo)
-        res.render("email-verified")
+//         const updatedInfo = await User.updateOne({_id:req.query.id},{$set:{is_verified:1}})
+//         console.log(updatedInfo)
+//         res.render("email-verified")
+
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
+
+//verify otp (post)
+const verifyOTP = async(req,res)=>{
+    try {
+        const id = req.query._id
+        const email = req.query.email
+        const otp = req.body.otp1 + req.body.otp2 + req.body.otp3 + req.body.otp4
+
+        const userData = await User.findOne({_id:id})
+        const OTPData = await UserOTPVerification.findOne({
+            email: email,
+            otpCode: otp
+        })
+
+        if(!userData || !otp) {
+            console.log('Invalid OTP or user already verified');
+            return res.render('verifyOTP',{message:'invalid OTP or user already verified'})
+        }
+        if(userData && OTPData && OTPData.otpCode === otp) {
+            await User.updateOne({_id: id},{$set:{is_verified: true}})
+            await UserOTPVerification.deleteOne({_id: OTPData._id})
+            
+            res.redirect('/login')
+        } else {
+            return res.render('verifyOTP',{message:'invalid OTP'})
+        }
 
     } catch (error) {
         console.log(error.message);
     }
 }
-//end
 
 //user login
 
@@ -342,10 +420,20 @@ const updateProfile = async(req,res)=>{
     }
 }
 
+//otp verification
+const loadVerify = async(req,res)=>{
+    try {
+        res.render('verifyOTP')
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 module.exports = {
     loadRegister,
     insertUser,
-    verifyMail,
+    // verifyMail,
+    verifyOTP,
     loginLoad,
     verifyLogin,
     forgetLoad,
@@ -355,5 +443,6 @@ module.exports = {
     loadHome,
     userLogout,
     editLoad,
-    updateProfile
+    updateProfile,
+    loadVerify
 }

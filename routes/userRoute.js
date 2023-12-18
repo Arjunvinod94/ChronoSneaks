@@ -27,7 +27,7 @@ user_route.get('/register',auth.isLogout,userController.loadRegister)
 user_route.post('/register',userController.insertUser)
 
 //for email verification
-user_route.get('/verify',userController.verifyMail)
+// user_route.get('/verify',userController.verifyMail)
 
 //for user login
 user_route.get('/',auth.isLogout,userController.loginLoad)
@@ -51,5 +51,9 @@ user_route.get('/logout',auth.isLogin,userController.userLogout)
 //user edit
 user_route.get('/edit',auth.isLogin,userController.editLoad)
 user_route.post('/edit',userController.updateProfile)
+
+//otp page
+user_route.get('/verifyotp',auth.isLogout,userController.loadVerify)
+user_route.post('/verifyotp',userController.verifyOTP)
 
 module.exports = user_route
