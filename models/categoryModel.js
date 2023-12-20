@@ -7,12 +7,11 @@ const categorySchema = new mongoose.Schema({
         required:true,
     },
     sub_category:{
-        type:String,
+        type:[String],
         required:true,
     },
     image:{
         type:String,
-        required:true,
     },
     description:{
         type:String,

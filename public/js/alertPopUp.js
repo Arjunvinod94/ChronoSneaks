@@ -40,3 +40,17 @@ function confirmUserEdit(event){
         event.preventDefault()
     }
 }
+
+function confirmCategoryDelete(event){
+    const isConfirmed = confirm('Are you sure you want to delete this category?')
+    if(!isConfirmed){
+        event.preventDefault()
+    }
+}
+
+function confirmEditCategory(event){
+    const isConfirmed = confirm('Are you sure you want to edit this category?')
+    if(!isConfirmed){
+        event.preventDefault()
+    }
+}

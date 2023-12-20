@@ -1,0 +1,48 @@
+<%- include('../layouts/adminHeader.ejs')%>
+
+<div style="display: flex; justify-content: center; align-items: center; padding: 20px;">
+<h1>Add New Category</h1>
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center;">
+<form action="" method="post">
+
+    <label for="name">Category Name</label>
+    
+    <select name="name" id="name" required>
+        <option value="">Select</option>
+        <option value="Sneakers">Sneakers</option>
+        <option value="Watches">Watches</option>
+    </select>
+    <br><br>
+
+    <label for="SubCategory">Sub-Category Name</label>
+    <select name="SubCategory" id="SubCategory" required>
+        <option value="">Select</option>
+        <option value="Sneakers">Sneakers</option>
+        <option value="Basketball">Basketball</option>
+        <option value="Classics">Classics</option>
+        <option value="Slides">Slides</option>
+        <option value="Automatic Watches">Automatic Watches</option>
+        <option value="Mechanical Watches">Mechanical Watches</option>
+        <option value="Quartz Watches">Quartz Watches</option>
+        <option value="Solar Watches">Solar Watches</option>
+    </select>
+    <br><br>
+    <label for="description">Description</label>
+    <textarea name="description" id="description" cols="30" rows="10"></textarea>
+    <br><br>
+    <input type="submit" value="Add Category" onclick="">
+    
+</form>
+
+<!-- <%
+    if(typeof message !== 'undefined'){
+        %>
+        <p style="color: rgb(224, 40, 30);"><% message %></p>
+        <%
+    }
+%> -->
+</div>
+
+<script src="/js/alertPopUp.js"></script>

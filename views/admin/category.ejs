@@ -1,0 +1,55 @@
+<%- include('../layouts/adminHeader.ejs') %>
+
+<style>
+    table,th,td {
+        border: 1px solid;
+    }
+</style>
+
+<div style="text-align: center; padding-top: 20px;">
+    <h1>Category</h1>
+</div>
+
+<a href="/admin/category/new-category" class="btn btn-outline-primary">Add Category</a>
+<br><br>
+
+<table style="width: 50%;">
+    <tr>
+        <th>Category</th>
+        <th>Sub Category</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
+
+    <%
+        if(CategoryData.length>0){
+
+            for(let i=0; i<CategoryData.length; i++){
+                %>
+                <tr>
+                    <td><%= CategoryData[i].category %></td>
+                    <td><%= CategoryData[i].sub_category %></td>
+                    <td><%= CategoryData[i].description %></td>
+
+                    <td>
+                        <a href="/admin/category/edit-category?id=<%= CategoryData[i]._id %>" class="btn btn-outline-success">Edit</a>
+                        
+                        <a href="/admin/category/delete-category?id=<%= CategoryData[i]._id %>" class="btn btn-outline-danger" onclick="confirmCategoryDelete(event)">Delete</a>
+                    </td>
+
+                </tr>
+                <%
+            }
+
+        }else{
+            %>
+            <tr>
+                <td colspan="5">Category Not Found</td>
+            </tr>
+
+            <%
+        }
+    %>
+
+</table>
+<script src="/js/alertPopUp.js"></script>

@@ -48,6 +48,16 @@ admin_route.get('/delete-user',adminController.deleteUser)
 //block-unblock user
 admin_route.get('/block-unblock-user',auth.isLogin,adminController.blockUnblockUser)
 
+//category page
+admin_route.get('/category',auth.isLogin,categoryController.loadCategory)
+admin_route.get('/category/new-category',auth.isLogin,categoryController.loadAddNewCategory)
+admin_route.post('/category/new-category',categoryController.verifyAddNewCategory)
+admin_route.get('/category/edit-category',auth.isLogin,categoryController.editCategoryLoad)
+admin_route.post('/category/edit-category',categoryController.updateCategoryLoad)
+admin_route.get('/category/delete-category',auth.isLogin,categoryController.deleteCategory)
+// admin_route.post('/category/edit-category',categoryController.editCategoryUpdate)
+
+
 //always loaad admin when wrong route is entered (used last)
 admin_route.get('*',(req,res)=>{
     res.redirect('/admin')
