@@ -1,48 +1,51 @@
-<%- include('../layouts/adminHeader.ejs')%>
+<%- include('../layouts/adminHeader.ejs') %>
 
-<div style="display: flex; justify-content: center; align-items: center; padding: 20px;">
-<h1>Add New Category</h1>
-</div>
+<title>Add New Category</title>
 
-<div style="display: flex; justify-content: center; align-items: center;">
-<form action="" method="post">
+<main>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6 border rounded p-4">
+                <div class="text-center mb-4">
+                    <h1 class="display-4" style="font-size: 30px; font-family: Arial, Helvetica, sans-serif;">Add New Category</h1>
+                </div>
 
-    <label for="name">Category Name</label>
-    
-    <select name="name" id="name" required>
-        <option value="">Select</option>
-        <option value="Sneakers">Sneakers</option>
-        <option value="Watches">Watches</option>
-    </select>
-    <br><br>
+                <div class="d-flex justify-content-center align-items-center">
+                    <form action="" method="post">
+                        <label for="name" class="mr-2">Category Name:</label>
+                        <select name="name" id="name" required class="form-control mb-3">
+                            <option value="">Select</option>
+                            <option value="Sneakers">Sneakers</option>
+                            <option value="Watches">Watches</option>
+                        </select>
 
-    <label for="SubCategory">Sub-Category Name</label>
-    <select name="SubCategory" id="SubCategory" required>
-        <option value="">Select</option>
-        <option value="Sneakers">Sneakers</option>
-        <option value="Basketball">Basketball</option>
-        <option value="Classics">Classics</option>
-        <option value="Slides">Slides</option>
-        <option value="Automatic Watches">Automatic Watches</option>
-        <option value="Mechanical Watches">Mechanical Watches</option>
-        <option value="Quartz Watches">Quartz Watches</option>
-        <option value="Solar Watches">Solar Watches</option>
-    </select>
-    <br><br>
-    <label for="description">Description</label>
-    <textarea name="description" id="description" cols="30" rows="10"></textarea>
-    <br><br>
-    <input type="submit" value="Add Category" onclick="">
-    
-</form>
+                        <label for="SubCategory" class="mr-2">Sub-Category Name:</label>
+                        <select name="SubCategory" id="SubCategory" required class="form-control mb-3">
+                            <option value="">Select</option>
+                            <option value="Sneakers">Sneakers</option>
+                            <option value="Basketball">Basketball</option>
+                            <option value="Classics">Classics</option>
+                            <option value="Slides">Slides</option>
+                            <option value="Automatic Watches">Automatic Watches</option>
+                            <option value="Mechanical Watches">Mechanical Watches</option>
+                            <option value="Quartz Watches">Quartz Watches</option>
+                            <option value="Solar Watches">Solar Watches</option>
+                        </select>
 
-<!-- <%
-    if(typeof message !== 'undefined'){
-        %>
-        <p style="color: rgb(224, 40, 30);"><% message %></p>
-        <%
-    }
-%> -->
-</div>
+                        <label for="description" class="mr-2">Description:</label>
+                        <textarea name="description" id="description" cols="30" rows="5" class="form-control mb-3"></textarea>
+
+                        <input type="submit" value="Add Category" class="btn btn-success">
+                    </form>
+                </div>
+
+                <!-- Uncomment the code below if you want to display a message -->
+                <!-- <% if(typeof message !== 'undefined') { %>
+                <p class="text-danger text-center"><%= message %></p>
+                <% } %> -->
+            </div>
+        </div>
+    </div>
+</main>
 
 <script src="/js/alertPopUp.js"></script>
