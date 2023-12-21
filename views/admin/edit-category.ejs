@@ -10,7 +10,7 @@
     <label for="name">Category Name</label>
     
     <select name="name" id="name" required>
-        <option value=""><%= CategoryData.category %></option>
+        <option value="<%= CategoryData.category %>"><%= CategoryData.category %></option>
         <option value="Sneakers">Sneakers</option>
         <option value="Watches">Watches</option>
     </select>
@@ -18,7 +18,7 @@
 
     <label for="SubCategory">Sub-Category Name</label>
     <select name="SubCategory" id="SubCategory" required>
-        <option value=""><%= CategoryData.sub_category %></option>
+        <option value="<%= CategoryData.sub_category %>"><%= CategoryData.sub_category %></option>
         <option value="Sneakers">Sneakers</option>
         <option value="Basketball">Basketball</option>
         <option value="Classics">Classics</option>
@@ -31,7 +31,7 @@
     <br><br>
 
     <label for="description">Description</label>
-    <textarea name="description" id="description" cols="30" rows="10" placeholder="<%= CategoryData.description %>"></textarea>
+    <textarea name="description" id="description" cols="30" rows="10" value="<%= CategoryData.description %>"><%= CategoryData.description %></textarea>
     <br><br>
 
     <input type="hidden" name="id" value="<%= CategoryData._id %>">

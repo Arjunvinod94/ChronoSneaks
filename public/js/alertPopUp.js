@@ -54,3 +54,10 @@ function confirmEditCategory(event){
         event.preventDefault()
     }
 }
+
+function confirmDelete(event){
+    const isConfirmed = confirm('Are you sure you want to delete?')
+    if(!isConfirmed){
+        event.preventDefault()
+    }
+}

@@ -14,6 +14,7 @@ admin_route.set('views','./views/admin')
 
 const multer = require('multer')
 const path = require('path')
+admin_route.use(express.static('public'))
 
 const auth = require('../middleware/adminAuth')
 
@@ -21,6 +22,26 @@ const adminController = require('../controllers/adminController')
 const categoryController = require('../controllers/categoryController')
 const productController = require('../controllers/productController')
 
+// Define storage for product images
+const storage = multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,path.join(__dirname,'../public/images/productImages'),function(err,success){
+            if(err){
+              throw err
+            }
+        })
+    },
+    filename:function(req,file,cb){
+        const name = Date.now()+'-'+file.originalname
+        cb(null,name,function(error,success){
+            if(error){
+                throw error
+            }
+        })
+    }
+})
+
+const upload = multer({storage:storage})
 
 //admin login
 admin_route.get('/',auth.isLogout,adminController.loadLogin)
@@ -57,7 +78,15 @@ admin_route.post('/category/edit-category',categoryController.updateCategoryLoad
 admin_route.get('/category/delete-category',auth.isLogin,categoryController.deleteCategory)
 // admin_route.post('/category/edit-category',categoryController.editCategoryUpdate)
 
+//product page
+admin_route.get('/products',auth.isLogin,productController.loadProduct)
+admin_route.get('/products/new-product',auth.isLogin,productController.loadAddNewProduct)
+admin_route.post('/products/new-product',upload.array('images'),productController.updateAddNewProduct)
 
+admin_route.get('/products/view-product',auth.isLogin,productController.adminSingleProductView)
+admin_route.get('/products/edit-product',auth.isLogin,productController.editProductLoad)
+admin_route.post('/products/edit-product',upload.array('images'),productController.updateEditProduct)
+admin_route.get('/products/delete-product',auth.isLogin,productController.deleteProduct)
 //always loaad admin when wrong route is entered (used last)
 admin_route.get('*',(req,res)=>{
     res.redirect('/admin')

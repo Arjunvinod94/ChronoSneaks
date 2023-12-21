@@ -1,48 +1,94 @@
 const mongoose = require('mongoose')
 
-const productSchema = new mongoose.Schema({
-
-    name:{
+var productSchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    description: {
         type: String,
         required: true,
+    },
+    price: {
+        type: String,
+        required: true
+    },
+    discount: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
     },
     images:{
-        type: [String],
-        required:true,
+        type: Array,
+        required: true,
     },
-    description:{
+    brand: {
         type: String,
         required: true,
     },
-    price:{
-        type: Number,
-        required: true,
-    },
-    category:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Category',
-        required: true,
-    },
-    brand:{
-        type:String,
-        required: true,
-    },
-    discount:{
-        type: Number,
-        required: false,
-    },
-    status:{
+    status: {
         type: Boolean,
         requried: true,
     },
-    stock:{
+    stock: {
         type: Number,
         required: true,
     },
-    created_at:{
+    created_at: {
         type: Date,
         default: Date.now,
     }
+
 })
 
 module.exports = mongoose.model('Product',productSchema)
+
+
+// const productSchema = new mongoose.Schema({
+
+//     name:{
+//         type: String,
+//         required: true,
+//     },
+//     images:{
+//         type: [String],
+//         required:true,
+//     },
+//     description:{
+//         type: String,
+//         required: true,
+//     },
+//     price:{
+//         type: Number,
+//         required: true,
+//     },
+//     category:{
+//         type: String,
+//         required: true,
+//     },
+//     brand:{
+//         type:String,
+//         required: true,
+//     },
+//     discount:{
+//         type: Number,
+//         required: false,
+//     },
+//     status:{
+//         type: Boolean,
+//         requried: true,
+//     },
+//     stock:{
+//         type: Number,
+//         required: true,
+//     },
+//     created_at:{
+//         type: Date,
+//         default: Date.now,
+//     }
+// })
+
+// module.exports = mongoose.model('Product',productSchema)

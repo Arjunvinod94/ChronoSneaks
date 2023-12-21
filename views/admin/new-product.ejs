@@ -1,0 +1,79 @@
+<%- include('../layouts/adminHeader.ejs')%>
+
+    <div style="display: flex; justify-content: center; align-items: center; padding: 20px;">
+        <h1>Add Products</h1>
+    </div>
+    <form id="ProductForm" name="ProductForm" method="post" action="/admin/products/new-product" enctype="multipart/form-data">
+        <div class="container mt-4">
+            <div class="row">
+                <!-- Left side content -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Images</label>
+                        <input type="file" class="form-control" name="images" id="images" accept="image/*" multiple>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" name="description" id="description" cols="30"
+                            rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="number" class="form-control" name="price" id="price">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Discount</label>
+                        <input type="number" class="form-control" name="discount" id="discount">
+                    </div>
+
+                </div>
+
+                <!-- Right side content -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select class="form-control" name="category" id="category">
+                            <option value="">Select</option>
+                            <% category.forEach(categoryes=> { %>
+                                <option value="<%= categoryes.category %>">
+                                    <%= categoryes.category %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="brand">Brand</label>
+                        <input type="text" class="form-control" name="brand" id="brand">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" name="status" id="status">
+                            <option value="">Select</option>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="stock">Stock</label>
+                        <input type="number" class="form-control" name="stock" id="stockQuantity">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit button and other elements in the center -->
+            <div class="row mt-4">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                    <!-- Add any additional elements for the center if needed -->
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
