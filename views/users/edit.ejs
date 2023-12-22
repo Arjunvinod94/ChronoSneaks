@@ -1,21 +1,34 @@
-<%- include('../layouts/header.ejs')%>
+<%- include('../layouts/header.ejs') %>
 
-<h2>Edit User Details</h2>
+<title>Edit User Details</title>
 
-<form action="" method="POST">
+<main>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6 border rounded p-4">
+                <div class="text-center mb-4">
+                    <h2 class="display-4" style="font-size: 24px; font-family: Arial, Helvetica, sans-serif;">Edit User Details</h2>
+                </div>
 
-    <input type="hidden" name="user_id" value="<%= user._id %>" placeholder="Enter your id">
-    <br><br>
+                <form action="" method="POST">
+                    <input type="hidden" name="user_id" value="<%= user._id %>" class="form-control mb-3">
 
-    <input type="text" name="name" value="<%= user.name %>" placeholder="Enter your Name">
-    <br><br>
-    <input type="email" name="email" value="<%= user.email %>" placeholder="Enter your Email">
-    <br><br>
-    <input type="text" name="mno" value="<%= user.mobile %>" placeholder="Enter your Mobile No">
-    <br><br>
-    <input type="submit" value="Update Profile" onclick="confirmUserEdit(event)">
+                    <label for="name" class="mr-2">Name:</label>
+                    <input type="text" name="name" value="<%= user.name %>" placeholder="Enter your Name" class="form-control mb-3">
 
-</form>
+                    <label for="email" class="mr-2">Email:</label>
+                    <input type="email" name="email" value="<%= user.email %>" placeholder="Enter your Email" class="form-control mb-3">
+
+                    <label for="mno" class="mr-2">Mobile No:</label>
+                    <input type="text" name="mno" value="<%= user.mobile %>" placeholder="Enter your Mobile No" class="form-control mb-3">
+
+                    <input type="submit" value="Update Profile" class="btn btn-success" onclick="confirmUserEdit(event)">
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
 <script src="/js/alertPopUp.js"></script>
 
-<%- include('../layouts/footer.ejs')%>
+<%- include('../layouts/footer.ejs') %>

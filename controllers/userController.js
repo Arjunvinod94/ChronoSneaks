@@ -1,4 +1,6 @@
 const User = require('../models/userModel')
+const Product = require('../models/productModel')
+const Category = require('../models/categoryModel')
 const bcrypt = require("bcrypt")
 const randomstring = require('randomstring')
 const nodemailer = require("nodemailer")
@@ -429,6 +431,55 @@ const loadVerify = async(req,res)=>{
     }
 }
 
+//products
+const loadWatchCategory = async(req,res)=>{
+    try {
+        const userData = await User.findById({ _id:req.session.user_id})
+        const ProductData = await Product.find({category:'Watches'})
+
+        res.render('watchCategory',{ user:userData,products: ProductData})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const loadSneakerCategory = async(req,res)=>{
+    try {
+        const userData = await User.findById({ _id:req.session.user_id})
+        const ProductData = await Product.find({category:'Sneakers'})
+
+        res.render('sneakerCategory',{ user:userData,products: ProductData})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const loadWatchView = async(req,res)=>{
+    try {
+        const id = req.query.id
+        const userData = await User.findById({ _id:req.session.user_id})
+        const ProductData = await Product.findById({_id:id})
+        
+
+        res.render('watchView',{ user:userData,products: ProductData})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const loadSneakerView = async(req,res)=>{
+    try {
+        const id = req.query.id
+        const userData = await User.findById({ _id:req.session.user_id})
+        const ProductData = await Product.findById({_id:id})
+        
+
+        res.render('sneakerView',{ user:userData,products: ProductData})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 module.exports = {
     loadRegister,
     insertUser,
@@ -444,5 +495,9 @@ module.exports = {
     userLogout,
     editLoad,
     updateProfile,
-    loadVerify
+    loadVerify,
+    loadWatchCategory,
+    loadSneakerCategory,
+    loadWatchView,
+    loadSneakerView,
 }

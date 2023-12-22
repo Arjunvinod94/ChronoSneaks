@@ -1,0 +1,42 @@
+<%- include('../layouts/header.ejs')%>
+
+<style>
+    .product-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin: 20px;
+    }
+
+    .product-card {
+        width: 22%;
+        margin: 10px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .product-image {
+        max-width: 100%;
+        height: 300px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<h1 style="text-align: center; margin-top: 20px;">Top Sneakers</h1>
+
+<div class="product-container">
+    <% for (let i = 0; i < products.length; i++) { %>
+        <div class="product-card">
+            <img class="product-image" src="/images/productImages/<%= products[i].images[0] %> " alt="img" >
+            <h3><%= products[i].name %></h3>
+            <p><%= products[i].brand %></p>
+            <p>$<%= products[i].price %></p>
+            <!-- Add more product details as needed -->
+
+            <a href="/home/products/sneakers/sneaker?id=<%= products[i]._id %>" class="btn btn-primary">View Details</a>
+        </div>
+    <% } %>
+</div>
+
+<%- include('../layouts/footer.ejs')%>

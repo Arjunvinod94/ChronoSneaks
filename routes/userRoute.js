@@ -56,4 +56,12 @@ user_route.post('/edit',userController.updateProfile)
 user_route.get('/verifyotp',auth.isLogout,userController.loadVerify)
 user_route.post('/verifyotp',userController.verifyOTP)
 
+//products
+user_route.get('/home/products/watches',auth.isLogin,userController.loadWatchCategory)
+user_route.get('/home/products/sneakers',auth.isLogin,userController.loadSneakerCategory)
+
+//detailed view of product
+user_route.get('/home/products/watches/watch',auth.isLogin,userController.loadWatchView)
+user_route.get('/home/products/sneakers/sneaker',auth.isLogin,userController.loadSneakerView)
+
 module.exports = user_route

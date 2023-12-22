@@ -29,7 +29,8 @@
                                 <td><%= i + 1 %></td>
                                 <td><%= ProductData[i].name %></td>
                                 <td><%= ProductData[i].description %></td>
-                                <td><img width="50px" height="50px" src="/images/productImages/<%= ProductData[i].images %>" alt=""></td>
+                                <td><img width="50px" height="50px" src="/images/productImages/<%= ProductData[i].images[0] %>" alt=""></td>
+                                
                                 <td>
                                     <a href="/admin/products/view-product?id=<%= ProductData[i]._id %>"
                                         class="btn btn-outline-primary btn-sm">View</a>

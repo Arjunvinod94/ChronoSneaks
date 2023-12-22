@@ -1,0 +1,68 @@
+<%- include('../layouts/header.ejs') %>
+
+<style>
+    .product-image-container {
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .product-image {
+        width: 300px;
+        height: 500px;
+    }
+
+    .additional-image-container {
+        max-width: 100px; /* Set a fixed size for additional images */
+        overflow: hidden;
+        margin-bottom: 5px; /* Adjust spacing as needed */
+    }
+
+    .additional-image {
+        width: 50px;
+        height: 80px;
+    }
+</style>
+
+<script>
+    function setPrimaryImage(imageUrl) {
+        // Set the clicked image as the primary image
+        document.getElementById('primaryImage').src = imageUrl;
+    }
+</script>
+
+<div class="container">
+    <div class="row">
+        <!-- Primary Product Image -->
+        <div class="col-md-6">
+            <div class="product-image-container">
+                <img id="primaryImage" class="product-image" src="/images/productImages/<%= products.images[0] %>" alt="Primary Product Image">
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+            <div class="product-details">
+                <h2><%= products.name %></h2>
+                <p><%= products.description %></p>
+                <p>Price: <%= products.price %></p>
+                <!-- Add more product details as needed -->
+
+                <!-- Add to Cart button or other actions -->
+                <button class="btn btn-primary">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Product Images -->
+    <div class="row mt-2">
+        <% products.images.forEach(image => { %>
+            <div class="col-md-1">
+                <div class="additional-image-container" onclick="setPrimaryImage('/images/productImages/<%= image %>')">
+                    <img class="additional-image" src="/images/productImages/<%= image %>" alt="Additional Product Image">
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<%- include('../layouts/footer.ejs') %>
