@@ -4,7 +4,11 @@ const session = require('express-session')
 
 //for session
 const config = require('../config/config')
-user_route.use(session({secret:config.sessionSecret}))
+user_route.use(session({
+    secret: config.sessionSecret,
+    resave: false, // Set to false to avoid deprecation warning
+    saveUninitialized: false, // Set to false to avoid deprecation warning
+  }));
 const auth = require('../middleware/auth') 
 
 user_route.set('view engine','ejs')

@@ -20,41 +20,6 @@ const securePassword = async(password)=>{
     }
 }
 
-//for send mail
-
-// const sendVerifyMail = async(name, email, user_id)=>{
-
-//     try {
-        
-//         const transporter = nodemailer.createTransport({
-//             host:'smtp.gmail.com',
-//             port:587,
-//             secure:false,
-//             requireTLS:true,
-//             auth:{
-//                 user: config.emailUser,
-//                 pass: config.emailPassword
-//             }
-//         })
-//         const mailOptions = {
-//             from: config.emailUser,
-//             to: email,
-//             subject: 'For Verifying the mail',
-//             html: '<p>Hi '+name+', here is your link for the verification of ChronoSneaks <a href = "http://localhost:3000/verify?id='+user_id+'"> Verify </a></p>',
-//         }
-//         transporter.sendMail(mailOptions, (error,info)=>{
-//             if(error){
-//                 console.log(error);
-//             } else {
-//                 console.log("Email has been sent",info.response);
-//             }
-//         })
-
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
-
 //otp mail
 const generateOTP = ()=>{
     return Math.floor(1000 + Math.random() * 9000).toString()
@@ -157,19 +122,6 @@ const insertUser = async(req,res)=>{
         console.log(error.message);
     }
 }
-
-//for emailVerification
-// const verifyMail = async(req,res)=>{
-//     try {
-        
-//         const updatedInfo = await User.updateOne({_id:req.query.id},{$set:{is_verified:1}})
-//         console.log(updatedInfo)
-//         res.render("email-verified")
-
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
 
 //verify otp (post)
 const verifyOTP = async(req,res)=>{
@@ -333,21 +285,6 @@ const forgetPasswordLoad = async(req,res)=>{
 }
 
 // forget-password(post)
-
-// const resetPassword = async(req,res)=>{
-//     try {
-//         const password = req.body.password
-//         const user_id = req.body.user_id
-//         const secure_password = await securePassword(password)
-
-//         const updatedData = await User.findByIdAndUpdate({_id:user_id},{$set:{password:secure_password, token:''}})
-//         res.redirect('/login')
-        
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
-
 const resetPassword = async(req,res)=>{
     try {
         const password = req.body.password
@@ -483,7 +420,6 @@ const loadSneakerView = async(req,res)=>{
 module.exports = {
     loadRegister,
     insertUser,
-    // verifyMail,
     verifyOTP,
     loginLoad,
     verifyLogin,
