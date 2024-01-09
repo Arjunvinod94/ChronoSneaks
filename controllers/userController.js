@@ -154,6 +154,25 @@ const verifyOTP = async(req,res)=>{
     }
 }
 
+//resend otp
+const loadResendOTP = async(req,res)=>{
+    try {
+        const email = req.query.email
+        const currentTime = new Date()
+        console.log(email)
+        const deleteOtp = await UserOTPVerification.deleteOne(
+            { email: email },
+            { otpExpiration: { $lt: currentTime } })
+            console.log("Expired OTP deleted");
+
+            if(deleteOtp) {
+                generateAndSendOTP(email)
+            }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 //user login
 
 const loginLoad = async(req,res)=>{
@@ -423,6 +442,8 @@ module.exports = {
     verifyOTP,
     loginLoad,
     verifyLogin,
+    loadResendOTP,
+
     forgetLoad,
     forgetVerify,
     forgetPasswordLoad,

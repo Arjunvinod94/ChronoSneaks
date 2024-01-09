@@ -111,13 +111,19 @@ const editProductLoad = async(req,res)=>{
 
 const updateEditProduct = async(req,res)=>{
     try {
+
+        var arrImages = []
+        for(let i=0;i<req.files.length;i++){
+            arrImages[i] = req.files[i].filename
+        }
+
         const id = req.query.id
         const name = req.body.name
         const description = req.body.description
         const price = req.body.price
         const discount = req.body.discount
         const category = req.body.category
-        const images = req.files
+        const images = arrImages
         const brand = req.body.brand
         const status = req.body.status
         const stock = req.body.stock
@@ -131,17 +137,18 @@ const updateEditProduct = async(req,res)=>{
             price: price,
             discount: discount,
             category: category,
+            images: images,
             brand: brand,
             status: status,
             stock: stock
           };
           
           // Check if new images were uploaded
-          if (req.files && req.files.length > 0) {
+        //   if (req.files && req.files.length > 0) {
             // Handle new images (e.g., save to server or cloud storage)
             // Replace existing images in the product model with new ones
-            updatedProducts.images = req.files.map(file => ({ filename: file.filename, originalname: file.originalname }));
-          }
+        //     updatedProducts.images = req.files.map(file => ({ filename: file.filename, originalname: file.originalname }));
+        //   }
           
           const updatedResult = await Product.findByIdAndUpdate({ _id: id }, updatedProducts, { new: true });
 

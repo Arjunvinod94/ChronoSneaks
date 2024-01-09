@@ -14,7 +14,7 @@ const auth = require('../middleware/auth')
 user_route.set('view engine','ejs')
 user_route.set('views','./views/users')
 
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser") //change it with express
 user_route.use(bodyParser.json())
 user_route.use(bodyParser.urlencoded({extended:true}))
 
@@ -59,6 +59,8 @@ user_route.post('/edit',userController.updateProfile)
 //otp page
 user_route.get('/verifyotp',auth.isLogout,userController.loadVerify)
 user_route.post('/verifyotp',userController.verifyOTP)
+
+user_route.get('/verifyotp/resendOTP',userController.loadResendOTP)
 
 //products
 user_route.get('/home/products/watches',auth.isLogin,userController.loadWatchCategory)

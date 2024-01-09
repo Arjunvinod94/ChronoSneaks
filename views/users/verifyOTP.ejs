@@ -101,7 +101,9 @@ form button:hover {
         </div>
         <button>Verify OTP</button>
         <br>
-        <p>Didn't recieve the code? <a href="">resend</a></p>
+        <!-- <p>Didn't recieve the code?</p> -->
+        <span class="d-block mobile-text" id="countdown"></span>
+        <span class="d-block mobile-text" id="resend"></span>
         <br>
         <% if(typeof message !=='undefined'){ %>
             <p style="color: red;">
@@ -111,3 +113,4 @@ form button:hover {
 </div>
 
 <script src="/js/verifyOTP.js" defer></script>
+<script src="/js/OTPCountdown.js" defer></script>

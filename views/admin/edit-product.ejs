@@ -14,69 +14,97 @@
                     </div>
                     <div class="form-group">
                         <label for="image">Images</label>
-                        <input type="file" class="form-control" name="images" id="images" accept="image/*" multiple value="<%= ProductData.images %>">
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea class="form-control" name="description" id="description" cols="30"
-                            rows="3"><%= ProductData.description %></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="price">Price</label>
-                        <input type="number" class="form-control" name="price" id="price" value="<%= ProductData.price %>">
-                    </div>
-                    <div class="form-group">
-                        <label for="price">Discount</label>
-                        <input type="number" class="form-control" name="discount" id="discount" value="<%= ProductData.discount %>">
+                        <input type="file" class="form-control" name="images" id="images" accept="image/*" multiple>
+
+                        <!-- Display previously added images -->
+                        <div id="previewImages" class="mt-2">
+                            <% for (let i=0; i < ProductData.images.length; i++) { %>
+                                <div class="image-preview">
+                                    <img style="margin-bottom: 5px;" width="100px" height="100px"
+                                        src="/images/productImages/<%= ProductData.images[i] %>" alt="Preview Image">
+                                    <button type="button" class="btn btn-sm btn-danger delete-image">Delete</button>
+                                </div>
+                                <% } %>
+                        </div>
                     </div>
 
                 </div>
-
-                <!-- Right side content -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="category">Category</label>
-                        <select class="form-control" name="category" id="category">
-                            <option value=""><%= ProductData.category %> </option>
-                            <% category.forEach(categoryes=> { %>
-                                <option value="<%= categoryes.category %>">
-                                    <%= categoryes.category %>
-                                </option>
-                                <% }); %>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="brand">Brand</label>
-                        <input type="text" class="form-control" name="brand" id="brand" value="<%= ProductData.brand %>">
-                    </div>
-                    <div class="form-group">
-                        <label for="status">Status</label>
-                        <select class="form-control" name="status" id="status">
-                            <option value="<%= ProductData.status %>"><%= ProductData.status %></option>
-                            <option value="true">True</option>
-                            <option value="false">False</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="stock">Stock</label>
-                        <input type="number" class="form-control" name="stock" id="stockQuantity" value="<%= ProductData.stock %>">
-                    </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" name="description" id="description" cols="30"
+                        rows="3"><%= ProductData.description %></textarea>
                 </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" class="form-control" name="price" id="price" value="<%= ProductData.price %>">
+                </div>
+                <div class="form-group">
+                    <label for="price">Discount</label>
+                    <input type="number" class="form-control" name="discount" id="discount"
+                        value="<%= ProductData.discount %>">
+                </div>
+
             </div>
 
-            <input type="hidden" name="id" value="<%=ProductData._id%>">
-
-
-            <!-- Submit button and other elements in the center -->
-            <div class="row mt-4">
-                <div class="col text-center">
-                    <button type="submit" class="btn btn-primary">Edit Product</button>
-                    <!-- Add any additional elements for the center if needed -->
+            <!-- Right side content -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select class="form-control" name="category" id="category">
+                        <option value="<%= ProductData.category %>">
+                            <%= ProductData.category %>
+                        </option>
+                        <% category.forEach(categoryes=> { %>
+                            <option value="<%= categoryes.category %>">
+                                <%= categoryes.category %>
+                            </option>
+                            <% }); %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="brand">Brand</label>
+                    <input type="text" class="form-control" name="brand" id="brand" value="<%= ProductData.brand %>">
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" name="status" id="status">
+                        <option value="<%= ProductData.status %>">
+                            <%= ProductData.status %>
+                        </option>
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="number" class="form-control" name="stock" id="stockQuantity"
+                        value="<%= ProductData.stock %>">
                 </div>
             </div>
+        </div>
+
+        <input type="hidden" name="id" value="<%=ProductData._id%>">
+
+
+        <!-- Submit button and other elements in the center -->
+        <div class="row mt-4">
+            <div class="col text-center">
+                <button type="submit" class="btn btn-primary">Edit Product</button>
+                <!-- Add any additional elements for the center if needed -->
+            </div>
+        </div>
         </div>
     </form>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Add JavaScript code to handle image deletion
+        $(document).ready(function () {
+            $('#previewImages').on('click', '.delete-image', function () {
+                // Remove the parent div when the delete button is clicked
+                $(this).parent().remove();
+            });
+        });
+    </script>

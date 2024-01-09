@@ -18,7 +18,7 @@
                         <form method="POST" class="register-form" id="register-form">
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="name" placeholder="Full Name" required oninput="validateTextField(this)">
+                                <input type="text" name="name" id="name" placeholder="Full Name" required oninput="validateTextField(this)">
                             </div>
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
@@ -26,7 +26,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="mobile"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="tel" name="mno" placeholder="Mobile" maxlength="10" required oninput="validateMobile(this)">
+                                <input type="tel" name="mno" id="mobile" placeholder="Mobile" maxlength="10" required oninput="validateMobile(this)">
                             </div>
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock-outline"></i></label>
@@ -68,5 +68,6 @@
     </div>
 
     <script src="/js/validateUser.js"></script>
+
 </body>
 </html>

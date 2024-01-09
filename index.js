@@ -4,6 +4,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/ChronoSneaks")
 const express = require("express")
 const app = express()
 
+//new function for db - make changes
+
 //new changes
 const nocache = require('nocache');
 app.use(nocache());
