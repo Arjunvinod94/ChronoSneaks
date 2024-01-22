@@ -3,11 +3,16 @@
     <link rel="stylesheet" type="text/css" href="/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/css/productCategory.css">
 
+    <style>
+        
+
+    </style>
 <!-- Product -->
 <div class="bg0 m-t-23 p-b-140">
     <div class="container">
         <h1>Top Sneakers</h1>
         <br>
+
         <div class="flex-w flex-sb-m p-b-52">
             <div class="flex-w flex-l-m filter-tope-group m-tb-10">
                 <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
@@ -21,6 +26,20 @@
                 <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
                     High Angle
                 </button>
+            </div>
+
+            <div class="flex-w flex-c-m m-tb-10">
+                <div class="custom-dropdown">
+                    <label for="sortDropdown" class="stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4">
+                        Sort
+                    </label>
+                    <select id="sortDropdown" class="select-box" onchange="location = this.value;">
+                        <option value="?page=1&sortBy=date" <%= (sortBy === 'date') ? 'selected' : '' %>>What's New</option>
+                        <option value="?page=1&sortBy=price&sortOrder=asc" <%= (sortBy === 'price' && sortOrder === 1) ? 'selected' : '' %>>Price Low to High</option>
+                        <option value="?page=1&sortBy=price&sortOrder=desc" <%= (sortBy === 'price' && sortOrder === -1) ? 'selected' : '' %>>Price High to Low</option>
+                    </select>
+                </div>
+                
                 
             </div>
             
@@ -61,6 +80,21 @@
             </div>
             <% } %>
         </div>
+
+        <!-- Centered Pagination Controls with Page Number Buttons -->
+        <div class="pagination-wrapper">
+            <div class="pagination">
+                <!-- Page Number Buttons -->
+                <% for (let i=1; i <=totalPages; i++) { %>
+                    <a href="?page=<%= i %>" class="small-button <%= (i === currentPage) ? 'active' : '' %>">
+                        <%= i %>
+                    </a>
+                    <% } %>
+            </div>
+        </div>
+
+
+        
     </div>
 </div>
 

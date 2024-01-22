@@ -388,27 +388,79 @@ const loadVerify = async(req,res)=>{
 }
 
 //products
-const loadWatchCategory = async(req,res)=>{
+const loadWatchCategory = async (req, res) => {
     try {
-        const userData = await User.findById({ _id:req.session.user_id})
-        const ProductData = await Product.find({category:'Watches'})
-
-        res.render('watchCategory',{ user:userData,products: ProductData})
+      const userData = await User.findById({ _id: req.session.user_id });
+  
+      const page = parseInt(req.query.page) || 1;
+      const pageSize = 4; // Adjust the number of products per page as needed
+  
+      // Sorting options
+      const validSortOptions = ['price', 'name', 'date'];
+      const sortBy = validSortOptions.includes(req.query.sortBy) ? req.query.sortBy : 'date';
+      const sortOrder = req.query.sortOrder === 'desc' ? -1 : 1;
+  
+      // Fetch paginated and sorted product data
+      const productData = await Product.find({ category: 'Watches' })
+        .sort({ [sortBy]: sortOrder })
+        .skip((page - 1) * pageSize)
+        .limit(pageSize);
+  
+      // Get total number of products for pagination information
+      const totalProducts = await Product.countDocuments({ category: 'Watches' });
+      const totalPages = Math.ceil(totalProducts / pageSize);
+  
+      res.render('watchCategory', {
+        user: userData,
+        products: productData,
+        currentPage: page,
+        totalPages: totalPages,
+        sortBy: sortBy,
+        sortOrder: sortOrder === -1 ? 'desc' : 'asc',
+      });
     } catch (error) {
-        console.log(error.message);
+      console.log(error.message);
+      res.status(500).send('Internal Server Error');
     }
-}
+  };
+  
 
-const loadSneakerCategory = async(req,res)=>{
+  const loadSneakerCategory = async (req, res) => {
     try {
-        const userData = await User.findById({ _id:req.session.user_id})
-        const ProductData = await Product.find({category:'Sneakers'})
-
-        res.render('sneakerCategory',{ user:userData,products: ProductData})
+      const userData = await User.findById({ _id: req.session.user_id });
+  
+      const page = parseInt(req.query.page) || 1;
+      const pageSize = 4; // Adjust the number of products per page as needed
+  
+      // Sorting options
+      const validSortOptions = ['price', 'name', 'date'];
+      const sortBy = validSortOptions.includes(req.query.sortBy) ? req.query.sortBy : 'date';
+      const sortOrder = req.query.sortOrder === 'desc' ? -1 : 1;
+  
+      // Fetch paginated and sorted product data
+      const productData = await Product.find({ category: 'Sneakers' })
+        .sort({ [sortBy]: sortOrder })
+        .skip((page - 1) * pageSize)
+        .limit(pageSize);
+  
+      // Get total number of products for pagination information
+      const totalProducts = await Product.countDocuments({ category: 'Sneakers' });
+      const totalPages = Math.ceil(totalProducts / pageSize);
+  
+      res.render('sneakerCategory', {
+        user: userData,
+        products: productData,
+        currentPage: page,
+        totalPages: totalPages,
+        sortBy: sortBy,
+        sortOrder: sortOrder === -1 ? 'desc' : 'asc',
+      });
     } catch (error) {
-        console.log(error.message);
+      console.log(error.message);
+      res.status(500).send('Internal Server Error');
     }
-}
+  };
+  
 
 const loadWatchView = async(req,res)=>{
     try {

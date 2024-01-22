@@ -1,70 +1,103 @@
 <%- include('../layouts/header.ejs')%>
 
     <link rel="stylesheet" type="text/css" href="/css/util.css">
-	<link rel="stylesheet" type="text/css" href="/css/productCategory.css">
-
-<!-- Product -->
-<div class="bg0 m-t-23 p-b-140">
-    <div class="container">
-        <h1>Top Watches</h1>
-        <br>
-        <div class="flex-w flex-sb-m p-b-52">
-            <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-                <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-                    All Watches
-                </button>
-
-                <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
-                    Automatic
-                </button>
-
-                <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
-                    Mechanical
-                </button>
-
-                <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
-                    Quartz
-                </button>
-            </div>
-            
-        </div>
-
-        <div class="row isotope-grid">
-            <% for (let i = 0; i < products.length; i++) { %>
-            <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-                <!-- Block2 -->
-                <div class="block2">
-                    <div class="block2-pic hov-img0">
-                        <img src="/images/productImages/<%= products[i].images[0] %>" style="height: 334px; width: 270;" alt="IMG-PRODUCT">
-
-                        <a href="/home/products/watches/watch?id=<%= products[i]._id %>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                            View
-                        </a>
+    <link rel="stylesheet" type="text/css" href="/css/productCategory.css">
+    <style>
+        
+    </style>
+    <!-- Product -->
+    <div class="bg0 m-t-23 p-b-140">
+        <div class="container">
+            <h1>Top Watches</h1>
+            <br>
+            <div class="flex-w flex-sb-m p-b-52">
+                <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+                        All Sneakers
+                    </button>
+    
+                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
+                        Low Angle
+                    </button>
+    
+                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
+                        High Angle
+                    </button>
+                </div>
+    
+                <div class="flex-w flex-c-m m-tb-10">
+                    <div class="custom-dropdown">
+                        <label for="sortDropdown" class="stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4">
+                            Sort
+                        </label>
+                        <select id="sortDropdown" class="select-box" onchange="location = this.value;">
+                            <option value="?page=1&sortBy=date" <%= (sortBy === 'date') ? 'selected' : '' %>>What's New</option>
+                            <option value="?page=1&sortBy=price&sortOrder=asc" <%= (sortBy === 'price' && sortOrder === 1) ? 'selected' : '' %>>Price Low to High</option>
+                            <option value="?page=1&sortBy=price&sortOrder=desc" <%= (sortBy === 'price' && sortOrder === -1) ? 'selected' : '' %>>Price High to Low</option>
+                        </select>
                     </div>
-
-                    <div class="block2-txt flex-w flex-t p-t-14">
-                        <div class="block2-txt-child1 flex-col-l ">
-                            <a href="/home/products/watches/watch?id=<%= products[i]._id %>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                <%= products[i].name %>
-                            </a>
-
-                            <span class="stext-105 cl3">
-                                $<%= products[i].price %>
-                            </span>
-                        </div>
-
-                        <div class="block2-txt-child2 flex-r p-t-3">
-                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                <img class="icon-heart1 dis-block trans-04" src="/images/icons/icon-heart-01.png" alt="ICON">
-                                <img class="icon-heart2 dis-block trans-04 ab-t-l" src="/images/icons/icon-heart-02.png" alt="ICON">
-                            </a>
-                        </div>
-                    </div>
+                    
+                    
+                    
                 </div>
             </div>
-            <% } %>
+
+            <div class="row isotope-grid">
+                <% for (let i=0; i < products.length; i++) { %>
+                    <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+                        <!-- Block2 -->
+                        <div class="block2">
+                            <div class="block2-pic hov-img0">
+                                <img src="/images/productImages/<%= products[i].images[0] %>"
+                                    style="height: 334px; width: 270;" alt="IMG-PRODUCT">
+
+                                <a href="/home/products/watches/watch?id=<%= products[i]._id %>"
+                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                    View
+                                </a>
+                            </div>
+
+                            <div class="block2-txt flex-w flex-t p-t-14">
+                                <div class="block2-txt-child1 flex-col-l ">
+                                    <a href="/home/products/watches/watch?id=<%= products[i]._id %>"
+                                        class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                        <%= products[i].name %>
+                                    </a>
+
+                                    <span class="stext-105 cl3">
+                                        $<%= products[i].price %>
+                                    </span>
+                                </div>
+
+                                <div class="block2-txt-child2 flex-r p-t-3">
+                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                        <img class="icon-heart1 dis-block trans-04"
+                                            src="/images/icons/icon-heart-01.png" alt="ICON">
+                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
+                                            src="/images/icons/icon-heart-02.png" alt="ICON">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+
+            <!-- Centered Pagination Controls with Page Number Buttons -->
+            <div class="pagination-wrapper">
+                <div class="pagination">
+                    <!-- Page Number Buttons -->
+                    <% for (let i=1; i <=totalPages; i++) { %>
+                        <a href="?page=<%= i %>" class="small-button <%= (i === currentPage) ? 'active' : '' %>">
+                            <%= i %>
+                        </a>
+                        <% } %>
+                </div>
+            </div>
+
+
+            
         </div>
     </div>
-</div>
 
-<%- include('../layouts/footer.ejs')%>
+    <%- include('../layouts/footer.ejs')%>
