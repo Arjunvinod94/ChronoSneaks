@@ -2,6 +2,7 @@ const Product = require('../models/productModel')
 const Category = require('../models/categoryModel')
 const User = require('../models/userModel')
 const fs = require('fs')
+const path = require("path");
 
 const loadProduct = async(req,res)=>{
     try {
@@ -81,15 +82,34 @@ const updateAddNewProduct = async(req,res)=>{
 
 const deleteProduct = async(req,res)=>{
     try {
-        const id = req.query.id
-        const updatedProduct = await Product.deleteOne({_id:id})
-        if(updatedProduct){
-            res.redirect('/admin/products')
+        const id = req.query.id;
+        const deletedProduct = await Product.findByIdAndDelete(id);
+
+        if (deletedProduct) {
+            const imageFilenames = deletedProduct.images; 
+            const imageFolderPath = path.join(__dirname, '../public/images/productImages');
+
+            const fs = require('fs');
+            imageFilenames.forEach((filename) => {
+                const imagePath = path.join(imageFolderPath, filename);
+
+                if (fs.existsSync(imagePath)) {
+                    fs.unlinkSync(imagePath);
+                    console.log(`Deleted image file: ${imagePath}`);
+                } else {
+                    console.log(`Image file not found: ${imagePath}`);
+                }
+            });
+
+            res.redirect('/admin/products');
+        } else {
+            res.status(404).send('Product not found');
         }
     } catch (error) {
-        console.log(error.message);
+        console.error(error.message);
+        res.status(500).send('Internal Server Error');
     }
-}
+};
 
 const editProductLoad = async(req,res)=>{
     try {

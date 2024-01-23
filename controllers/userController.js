@@ -399,9 +399,19 @@ const loadWatchCategory = async (req, res) => {
       const validSortOptions = ['price', 'name', 'date'];
       const sortBy = validSortOptions.includes(req.query.sortBy) ? req.query.sortBy : 'date';
       const sortOrder = req.query.sortOrder === 'desc' ? -1 : 1;
-  
+        
+      var search = ''
+      if(req.query.productSearch){
+        search = req.query.productSearch
+      }
       // Fetch paginated and sorted product data
-      const productData = await Product.find({ category: 'Watches' })
+      const productData = await Product.find({ 
+        category: 'Watches',
+        $or:[
+            { name:{$regex:'.*'+search+'.*',$options:'i'}},
+            { brand:{$regex:'.*'+search+'.*',$options:'i'}},
+        ]
+     })
         .sort({ [sortBy]: sortOrder })
         .skip((page - 1) * pageSize)
         .limit(pageSize);
@@ -436,9 +446,19 @@ const loadWatchCategory = async (req, res) => {
       const validSortOptions = ['price', 'name', 'date'];
       const sortBy = validSortOptions.includes(req.query.sortBy) ? req.query.sortBy : 'date';
       const sortOrder = req.query.sortOrder === 'desc' ? -1 : 1;
-  
+        
+      var search = ''
+      if(req.query.productSearch){
+        search = req.query.productSearch
+      }
       // Fetch paginated and sorted product data
-      const productData = await Product.find({ category: 'Sneakers' })
+      const productData = await Product.find({
+        category: 'Sneakers',
+        $or:[
+            {name:{$regex:'.*'+search+'.*',$options:'i'}},
+            {brand:{$regex:'.*'+search+'.*',$options:'i'}},
+        ]
+    })
         .sort({ [sortBy]: sortOrder })
         .skip((page - 1) * pageSize)
         .limit(pageSize);
