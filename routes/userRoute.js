@@ -25,6 +25,7 @@ const path = require("path")
 user_route.use(express.static('public'))
 
 const userController = require('../controllers/userController')
+const cartController = require('../controllers/cartController')
 
 user_route.get('/register',auth.isLogout,userController.loadRegister)
 
@@ -69,5 +70,10 @@ user_route.get('/home/products/sneakers',auth.isLogin,userController.loadSneaker
 //detailed view of product
 user_route.get('/home/products/watches/watch',auth.isLogin,userController.loadWatchView)
 user_route.get('/home/products/sneakers/sneaker',auth.isLogin,userController.loadSneakerView)
+
+//user cart
+user_route.get('/shoppingCart',auth.isLogin,cartController.loadshoppingCart)
+user_route.post('/home/products/add-to-cart/:productId',auth.isLogin,cartController.userAddToCart)
+user_route.delete('/shoppingCart/:product_id',auth.isLogin,cartController.deleteCartItem);
 
 module.exports = user_route

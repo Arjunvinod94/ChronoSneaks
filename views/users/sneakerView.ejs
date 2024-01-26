@@ -72,13 +72,13 @@
 						</ul>
 					</div> -->
 					<div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
-						<span>Quantity:</span>
-						<div class="quantity_selector">
-							<span class="minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
-							<span id="quantity_value">1</span>
-							<span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
-						</div>
-						<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+
+						<form action="/home/products/add-to-cart/<%= products._id %>" method="post">
+				
+							<div class="red_button add_to_cart_button">
+								<button type="submit" >Add to Cart</button>
+							</div>
+						</form>
 						<div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
 					</div>
 				</div>

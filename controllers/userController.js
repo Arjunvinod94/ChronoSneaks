@@ -495,6 +495,7 @@ const loadWatchView = async(req,res)=>{
     }
 }
 
+
 const loadSneakerView = async(req,res)=>{
     try {
         const id = req.query.id

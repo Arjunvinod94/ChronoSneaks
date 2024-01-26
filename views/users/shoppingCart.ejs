@@ -1,0 +1,204 @@
+<%- include('../layouts/header.ejs') %>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+<style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+  
+    .shopping-card {
+      margin: 50px auto;
+      max-width: 940px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+    }
+  
+    .cart-title {
+      margin-bottom: 20px;
+    }
+  
+    .cart-title h4 {
+      margin: 0;
+    }
+  
+    .cart-row {
+      margin: 10px 0;
+    }
+  
+    .cart-main {
+      justify-content: space-between;
+    }
+  
+    .cart-col-2 img {
+      max-width: 100%;
+      border-radius: 4px;
+    }
+  
+    .close-btn {
+      cursor: pointer;
+    }
+  
+    .quantity-btn {
+      border: 1px solid #ccc;
+      padding: 5px 10px;
+      margin: 0 5px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 4px;
+    }
+  
+    .back-to-shop-btn {
+      margin-top: 20px;
+    }
+  
+    .back-to-shop-btn a {
+      text-decoration: none;
+      font-size: 20px;
+      color: #333;
+      margin-right: 10px;
+    }
+  
+    .summary-box {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+    }
+  
+    .summary-title h5 {
+      margin: 0;
+    }
+  
+    .summary-hr {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border: 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  
+    .shipping-select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+  
+    #code-input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+  
+    .row-total-box {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 2vh 0;
+    }
+  
+    .total-col {
+      width: 50%;
+    }
+  
+    .checkout-btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+  
+
+  <div class="shopping-card">
+    <div class="row">
+        <div class="col-md-8 cart">
+            <div class="cart-title">
+                <div class="cart-row">
+                    <div class="col"><h4><b>Shopping Cart</b></h4></div>
+                    <div class="col align-self-center text-right text-muted"><%=userCartCount%> items</div>
+                </div>
+            </div>    
+            <div class="row border-top border-bottom">
+              <%userCart.cart.forEach(cart=>{%>
+                <div class="row cart-main align-items-center">
+                    <div class="col-2"><img class="img-fluid cart-col-2" src="/images/productImages/<%=cart.image %>"></div>
+                    <div class="col">
+                        <div class="cart-row text-muted"><Shirt></div>
+                        <div class="cart-row"><%= cart.product_id.name %></div>
+                    </div>
+                    <div class="col">
+                        <a href="#">-</a><a href="#" class="quantity-btn border">1</a><a href="#">+</a>
+                    </div>
+                    <div class="col">&dollar; <%= cart.product_id.price %> <button data-delete-item="<%= cart._id %>" class="close-btn delete-item">&#10005;</button></div>
+                </div>
+                <% }) %>
+            </div>
+            
+            <div class="back-to-shop-btn"><a href="/home">&leftarrow; Back to shop</a></div>
+        </div>
+        <div class="col-md-4 summary-box">
+            <div><h5><b>Summary</b></h5></div>
+            
+            <hr class="summary-hr">
+            <div class="cart-row">
+                <div class="total-col" style="padding-left:0;">ITEMS 3</div>
+                <div class="total-col text-right">&euro; <%=userCart.total_price  %></div>
+            </div>
+            <form>
+                <p>SHIPPING</p>
+                <select class="shipping-select">
+                  <option class="text-muted">Standard Delivery &dollar; 0.00</option>
+                  <option class="text-muted">Fast Delivery &dollar; 5.00</option>
+                </select>
+                <p>GIVE CODE</p>
+                <input id="code-input" placeholder="Enter your code">
+            </form>
+            <div class="cart-row row-total-box" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                <div class="total-col">TOTAL PRICE</div>
+                <div class="total-col text-right">&dollar; <%=userCart.total_price  %></div>
+            </div>
+            <button class="checkout-btn">CHECKOUT</button>
+        </div>
+    </div>
+</div>
+
+<script>
+  
+  $(document).ready(function() {
+    $(".delete-item").on("click", function() {
+      var cartItemId = $(this).data("delete-item");
+      deleteCartItem(cartItemId);
+    });
+  
+    function deleteCartItem(cartItemId) {
+      $.ajax({
+        url: "/shoppingCart/" + cartItemId,
+        type: "DELETE", // or "POST" depending on your server setup
+        data: JSON.stringify({ cartItemId: cartItemId }),
+        contentType: "application/json",
+        success: function(response) {
+          console.log(response);
+          if (response.success) {
+          // Redirect to /shoppingCart
+          window.location.href = "/shoppingCart";
+        }
+        },
+        error: function(error) {
+          console.error(error);
+          // Handle error
+        }
+      });
+    }
+  });
+  </script>
+
+<%- include('../layouts/footer.ejs') %>
