@@ -391,9 +391,9 @@ const loadVerify = async(req,res)=>{
 const loadWatchCategory = async (req, res) => {
     try {
       const userData = await User.findById({ _id: req.session.user_id });
-  
+      
       const page = parseInt(req.query.page) || 1;
-      const pageSize = 4; // Adjust the number of products per page as needed
+      const pageSize = 3; // Adjust the number of products per page as needed
   
       // Sorting options
       const validSortOptions = ['price', 'name', 'date'];
@@ -440,7 +440,7 @@ const loadWatchCategory = async (req, res) => {
       const userData = await User.findById({ _id: req.session.user_id });
   
       const page = parseInt(req.query.page) || 1;
-      const pageSize = 4; // Adjust the number of products per page as needed
+      const pageSize = 3; // Adjust the number of products per page as needed
   
       // Sorting options
       const validSortOptions = ['price', 'name', 'date'];

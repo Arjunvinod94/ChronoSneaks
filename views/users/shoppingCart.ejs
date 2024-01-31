@@ -1,6 +1,6 @@
 <%- include('../layouts/header.ejs') %>
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
 <style>
@@ -182,23 +182,107 @@
     function deleteCartItem(cartItemId) {
       $.ajax({
         url: "/shoppingCart/" + cartItemId,
-        type: "DELETE", // or "POST" depending on your server setup
+        type: "DELETE", 
         data: JSON.stringify({ cartItemId: cartItemId }),
         contentType: "application/json",
         success: function(response) {
           console.log(response);
           if (response.success) {
-          // Redirect to /shoppingCart
+          
           window.location.href = "/shoppingCart";
         }
         },
         error: function(error) {
           console.error(error);
-          // Handle error
+          
         }
       });
     }
   });
-  </script>
+  </script> -->
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <div class="page-wrapper">
+    <div class="cart shopping">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <div class="block">
+              <div class="product-list">
+                
+                <form method="post">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="">Item Name</th>
+                        <th class="">Item Price</th>
+                        <th class="">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <%userCart.cart.forEach(cart=>{%>
+                      <tr class="">
+                        <td class="">
+                          <div class="product-info">
+                            <img width="80" height="106.66" src="/images/productImages/<%=cart.image %>" alt="" />
+                            <a href="#!"><%= cart.product_id.name %></a>
+                          </div>
+                        </td>
+                        <td class=""><%= cart.product_id.price %></td>
+                        <td class="">
+
+                          <a href="#" class="product-remove delete-item" data-delete-item="<%= cart._id %>">Remove</a>
+
+                          <!-- <button data-delete-item="<%= cart._id %>" class="product-remove">Remove</button> -->
+                        </td>
+                      </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>
+                  <a href="/checkout" class="btn btn-main pull-right">Checkout</a>
+                </form>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+  $(document).ready(function() {
+    $(".delete-item").on("click", function(e) {
+        e.preventDefault(); // Prevent the default link behavior
+        var cartItemId = $(this).data("delete-item");
+        deleteCartItem(cartItemId);
+    });
+
+    function deleteCartItem(cartItemId) {
+        $.ajax({
+            url: "/shoppingCart/" + cartItemId,
+            type: "DELETE",
+            data: JSON.stringify({ cartItemId: cartItemId }),
+            contentType: "application/json",
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    window.location.href = "/shoppingCart";
+                }
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    }
+});
+
+
+
+</script>
+
+
 
 <%- include('../layouts/footer.ejs') %>

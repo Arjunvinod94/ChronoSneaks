@@ -1,13 +1,13 @@
 <%- include('../layouts/header.ejs')%>
 
-    <link rel="stylesheet" type="text/css" href="/css/util.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/css/productCategory.css">
 
     <style>
         
 
     </style>
-<!-- Product -->
+
 <div class="bg0 m-t-23 p-b-140">
     <div class="container">
         <h1>Top Sneakers</h1>
@@ -48,7 +48,7 @@
         <div class="row isotope-grid">
             <% for (let i = 0; i < products.length; i++) { %>
             <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-                <!-- Block2 -->
+                
                 <div class="block2">
                     <div class="block2-pic hov-img0">
                         <img src="/images/productImages/<%= products[i].images[0] %>" style="height: 334px; width: 270;" alt="IMG-PRODUCT">
@@ -81,10 +81,10 @@
             <% } %>
         </div>
 
-        <!-- Centered Pagination Controls with Page Number Buttons -->
+        
         <div class="pagination-wrapper">
             <div class="pagination">
-                <!-- Page Number Buttons -->
+                
                 <% for (let i=1; i <=totalPages; i++) { %>
                     <a href="?page=<%= i %>" class="small-button <%= (i === currentPage) ? 'active' : '' %>">
                         <%= i %>
@@ -96,6 +96,222 @@
 
         
     </div>
-</div>
+</div> -->
+
+
+<section class="products section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="widget">
+                    <h4 class="widget-title">Short By</h4>
+                    <form method="post" action="#">
+                        <select class="form-control" id="sortDropdown" onchange="location = this.value;">
+                            <option value="?page=1&sortBy=date" <%= (sortBy === 'date') ? 'selected' : '' %>>What's New</option>
+                            <option value="?page=1&sortBy=price&sortOrder=asc" <%= (sortBy === 'price' && sortOrder === 1) ? 'selected' : '' %>>Price Low to High</option>
+                            <option value="?page=1&sortBy=price&sortOrder=desc" <%= (sortBy === 'price' && sortOrder === -1) ? 'selected' : '' %>>Price High to Low</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="widget product-category">
+                    <h4 class="widget-title">Categories</h4>
+                    <div class="panel-group commonAccordion" id="accordion" role="tablist"
+                        aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                        href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Shoes
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li><a href="#!">Brand & Twist</a></li>
+                                        <li><a href="#!">Shoe Color</a></li>
+                                        <li><a href="#!">Shoe Color</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                        aria-controls="collapseTwo">
+                                        Duty Wear
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li><a href="#!">Brand & Twist</a></li>
+                                        <li><a href="#!">Shoe Color</a></li>
+                                        <li><a href="#!">Shoe Color</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                        WorkOut Shoes
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li><a href="#!">Brand & Twist</a></li>
+                                        <li><a href="#!">Shoe Color</a></li>
+                                        <li><a href="#!">Gladian Shoes</a></li>
+                                        <li><a href="#!">Swis Shoes</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- new changes -->
+            <div class="col-md-9">
+                <% for (let i = 0; i < products.length; i++) { %>
+                    <% if (i % 3 === 0) { %>
+                        <div class="row">
+                    <% } %>
+                    <div class="col-md-4">
+                        <div class="product-item">
+                            <div class="product-thumb">
+                                <!-- <span class="bage">Sale</span> -->
+                                <img class="img-responsive"
+                                    src="/images/productImages/<%= products[i].images[0] %>"
+                                    alt="product-img" />
+                                <div class="preview-meta">
+                                    <ul>
+                                        <li>
+                                            <!-- <span data-toggle="modal" data-target="#product-modal"> -->
+                                                <a href="/home/products/watches/watch?id=<%= products[i]._id %>"><i class="tf-ion-ios-search-strong"></i></a>
+                                            <!-- </span> -->
+                                        </li>
+                                        <li>
+                                            <a href="#!"><i class="tf-ion-ios-heart"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#!"><i class="tf-ion-android-cart"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h4><a href="/home/products/watches/watch?id=<%= products[i]._id %>">
+                                        <%= products[i].name %>
+                                    </a></h4>
+                                <p class="price">
+                                    $ <%= products[i].price %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <% if ((i + 1) % 3 === 0 || i === products.length - 1) { %>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+            
+
+
+                <!-- Modal - uncomment if you want a glance of product-->
+                <!-- <div class="modal product-modal fade" id="product-modal">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="tf-ion-close"></i>
+                    </button>
+                    <div class="modal-dialog " role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-6 col-xs-12">
+                                        <div class="modal-image">
+                                            <img class="img-responsive" src="images/shop/products/modal-product.jpg"
+                                                alt="product-img" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="product-short-details">
+                                            <h2 class="product-title">GM Pendant, Basalt Grey</h2>
+                                            <p class="product-price">$200</p>
+                                            <p class="product-short-description">
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem iusto
+                                                nihil cum. Illo laborum numquam rem aut officia dicta cumque.
+                                            </p>
+                                            <a href="cart.html" class="btn btn-main">Add To Cart</a>
+                                            <a href="product-single.html" class="btn btn-transparent">View Product
+                                                Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- /.modal -->
+
+            </div>
+        </div>
+        <!-- <div class="text-center">
+            <ul class="pagination post-pagination">
+                <li><a href="blog-left-sidebar.html">Prev</a>
+                </li>
+                <li class="active"><a href="blog-left-sidebar.html">1</a>
+                </li>
+                <li><a href="blog-left-sidebar.html">2</a>
+                </li>
+                <li><a href="blog-left-sidebar.html">3</a>
+                </li>
+                <li><a href="blog-left-sidebar.html">4</a>
+                </li>
+                <li><a href="blog-left-sidebar.html">5</a>
+                </li>
+                <li><a href="blog-left-sidebar.html">Next</a>
+                </li>
+            </ul>
+        </div> -->
+
+        <div class="text-center">
+            <ul class="pagination post-pagination">
+                <!-- Previous Page -->
+                <li class="<%= currentPage === 1 ? 'disabled' : '' %>">
+                    <a href="?page=<%= currentPage - 1 %>">Prev</a>
+                </li>
+        
+                <!-- Page Numbers -->
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <li class="<%= currentPage === i ? 'active' : '' %>">
+                        <a href="?page=<%= i %>"><%= i %></a>
+                    </li>
+                <% } %>
+        
+                <!-- Next Page -->
+                <li class="<%= currentPage === totalPages ? 'disabled' : '' %>">
+                    <a href="?page=<%= currentPage + 1 %>">Next</a>
+                </li>
+            </ul>
+        </div>
+        
+
+    </div>
+    </div>
+</section>
+
 
 <%- include('../layouts/footer.ejs')%>

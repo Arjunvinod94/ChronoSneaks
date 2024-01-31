@@ -1,6 +1,6 @@
 <%- include('../layouts/header.ejs') %>
 
-<title>Edit User Details</title>
+<!-- <title>Edit User Details</title>
 
 <main>
     <div class="container mt-4">
@@ -27,7 +27,42 @@
             </div>
         </div>
     </div>
-</main>
+</main> -->
+
+
+<section class="user-dashboard page-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="list-inline dashboard-menu text-center">
+            <li><a class="active"  href="profile-details.html">Profile Details</a></li>
+            <li><a href="address.html">Address</a></li>
+            <li><a href="order.html">Orders</a></li>
+          </ul>
+          <div class="dashboard-wrapper dashboard-user-profile">
+            <div class="media">
+              <div class="pull-left text-center" href="#!">
+                <img class="media-object user-img" src="/images/user_img/profile.png" alt="Image">
+                <!-- <a href="#x" class="btn btn-transparent mt-20">Change Image</a> -->
+              </div>
+              <div class="media-body">
+                <form action="" method="POST">
+                <ul class="user-profile-list">
+                  <li><input type="hidden" name="user_id" value="<%= user._id %>" class="form-control mb-3"></li>
+                  <li><span>Full Name:</span><input type="text" name="name" value="<%= user.name %>" placeholder="Enter your Name" class="form-control mb-3"></li>
+                  <li><span>Email:</span><input type="email" name="email" value="<%= user.email %>" placeholder="Enter your Email" class="form-control mb-3"></li>
+                  <li><span>Phone:</span><input type="text" name="mno" value="<%= user.mobile %>" placeholder="Enter your Mobile No" class="form-control mb-3"></li>
+                  <input type="submit" value="Update Profile" class="btn btn-success" onclick="confirmUserEdit(event)">
+                </ul>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
 <script src="/js/alertPopUp.js"></script>
 

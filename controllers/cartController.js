@@ -67,13 +67,14 @@ const userAddToCart = async (req, res) => {
                         {_id: user_id},
                         {$set: { total_price: total_price}}
                     )
-                    return res.status(200).json({
-                        success: true,
-                        total_price,
-                        message: "Product added to cart",
-                        redirectTo: "/home/cart",
-                        cartCount: updatedCart.cart.length,
-                      });
+                    // return res.status(200).json({
+                    //     success: true,
+                    //     total_price,
+                    //     message: "Product added to cart",
+                    //     redirectTo: "/shoppingCart",
+                    //     cartCount: updatedCart.cart.length,
+                    //   });
+                    return res.redirect('/shoppingCart')
                 }
             } else {
 
@@ -92,12 +93,13 @@ const userAddToCart = async (req, res) => {
                 })
                 const cartData = await newCart.save()
 
-                return res.status(200).json({
-                    success: true,
-                    message: "Product added to cart",
-                    redirectTo: "/home/cart",
-                    cartCount: newCart.cart.length,
-                  });
+                // return res.status(200).json({
+                //     success: true,
+                //     message: "Product added to cart",
+                //     redirectTo: "/home/cart",
+                //     cartCount: newCart.cart.length,
+                //   });
+                return res.redirect('/shoppingCart')
             }
         } else {
              // Redirect if the user is not authenticated
@@ -187,7 +189,6 @@ const userAddToCart = async (req, res) => {
       }
     };
     
-    
       
 
 
@@ -195,5 +196,5 @@ const userAddToCart = async (req, res) => {
 module.exports = {
     loadshoppingCart,
     userAddToCart,
-    deleteCartItem
+    deleteCartItem,
 }
