@@ -378,6 +378,60 @@ const updateProfile = async(req,res)=>{
     }
 }
 
+const loadUpdatePassword = async(req,res)=>{
+    try {
+        const user_id = req.session._id
+        const userData = await User.find({_id: user_id})
+
+        res.render('update-password',{user : userData})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const verifyUpdatePassword = async (req, res) => {
+    try {
+        const user_id = req.session.user_id;
+        const oldPassword = req.body.oldPassword;
+        const newPassword = req.body.newPassword;
+        const confirmPassword = req.body.confirmPassword;
+
+        const data = await User.findOne({ _id: user_id });
+
+        if (!data) {
+            return res.status(404).send({ success: false, msg: "User not found" });
+        }
+
+        const passwordMatch = await bcrypt.compare(oldPassword, data.password);
+
+        if (passwordMatch) {
+            if (newPassword === confirmPassword) {
+                const updatePassword = await securePassword(newPassword);
+
+                const userData = await User.findByIdAndUpdate(
+                    { _id: user_id },
+                    { $set: { password: updatePassword } }
+                );
+
+                if (userData) {
+                    console.log("Password successfully changed");
+                    return res.redirect('/home');
+                } else {
+                    return res.status(500).send({ success: false, msg: "Error updating password" });
+                }
+            } else {
+                return res.render('update-password', { message: "Both Passwords Don't Match", user: data });
+            }
+        } else {
+            return res.render('update-password', { message: "Old Password Incorrect", user: data });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
+};
+
+
 //otp verification
 const loadVerify = async(req,res)=>{
     try {
@@ -525,6 +579,8 @@ module.exports = {
     userLogout,
     editLoad,
     updateProfile,
+    loadUpdatePassword,
+    verifyUpdatePassword,
     loadVerify,
     loadWatchCategory,
     loadSneakerCategory,

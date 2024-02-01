@@ -53,8 +53,12 @@
                   <li><span>Email:</span><input type="email" name="email" value="<%= user.email %>" placeholder="Enter your Email" class="form-control mb-3"></li>
                   <li><span>Phone:</span><input type="text" name="mno" value="<%= user.mobile %>" placeholder="Enter your Mobile No" class="form-control mb-3"></li>
                   <input type="submit" value="Update Profile" class="btn btn-success" onclick="confirmUserEdit(event)">
+                  <div style="text-align: right;">
+                    <a href="/edit/update-password" style="display: inline-block;">Change Password?</a>
+                  </div>
                 </ul>
                 </form>
+                
               </div>
             </div>
           </div>

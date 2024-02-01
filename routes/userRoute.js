@@ -57,6 +57,10 @@ user_route.get('/logout',auth.isLogin,userController.userLogout)
 user_route.get('/edit',auth.isLogin,userController.editLoad)
 user_route.post('/edit',userController.updateProfile)
 
+//change password
+user_route.get('/edit/update-password',auth.isLogin, userController.loadUpdatePassword)
+user_route.post('/edit/update-password',userController.verifyUpdatePassword)
+
 //otp page
 user_route.get('/verifyotp',auth.isLogout,userController.loadVerify)
 user_route.post('/verifyotp',userController.verifyOTP)
