@@ -77,7 +77,7 @@ const verifyLogin = async(req,res)=>{
                 if(userData.is_admin === 0){
                     res.render('login',{message:"Email and password is incorrect"})
                 }else{
-                    req.session.user_id = userData._id
+                    req.session.admin_id = userData._id
                     res.redirect('/admin/home')
                 }
 
@@ -97,7 +97,7 @@ const verifyLogin = async(req,res)=>{
 //admin Dashboard(Home)
 const loadDashboard = async(req,res)=>{
     try {
-        const userData = await User.findById({_id:req.session.user_id})
+        const userData = await User.findById({_id:req.session.admin_id})
         res.render('home',{admin:userData})
 
     } catch (error) {
@@ -121,7 +121,7 @@ const logout = async(req,res)=>{
 // admin dashboard for user management
 const adminDashboard = async(req,res)=>{
     try {
-        const userData = await User.findById({_id:req.session.user_id})
+        const userData = await User.findById({_id:req.session.admin_id})
         const usersData = await User.find({is_admin:0})
         res.render('dashboard',{users:usersData,admin:userData})
     } catch (error) {
@@ -132,7 +132,7 @@ const adminDashboard = async(req,res)=>{
 //admin add new user(get)
 const newUserLoad = async(req,res)=>{
     try {
-        const userData = await User.findById({_id:req.session.user_id})
+        const userData = await User.findById({_id:req.session.admin_id})
         res.render('new-user',{admin:userData})
     } catch (error) {
         console.log(error.message);
@@ -178,7 +178,7 @@ const editUserLoad = async(req,res)=>{
     try {
         const id = req.query.id
 
-        const adminData = await User.findById({_id:req.session.user_id})
+        const adminData = await User.findById({_id:req.session.admin_id})
         const userData = await User.findById({_id:id,})
         if(userData){
             res.render('edit-user',{user:userData, admin:adminData})

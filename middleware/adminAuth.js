@@ -1,7 +1,7 @@
 const isLogin = async(req,res,next)=>{
     try {
         
-        if(req.session.user_id){
+        if(req.session.admin_id){ // 02/02/2024 - created admin_id instead of user_id
 
         }else{
             return res.redirect('/admin')
@@ -15,7 +15,7 @@ const isLogin = async(req,res,next)=>{
 const isLogout = async(req,res,next)=>{
     try {
         
-        if(req.session.user_id){
+        if(req.session.admin_id){
             return res.redirect('/admin/home')
         }
         next()

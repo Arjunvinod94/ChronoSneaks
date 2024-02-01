@@ -4,7 +4,7 @@ const admin_route = express()
 const session = require('express-session')
 const config = require('../config/config')
 admin_route.use(session({
-    secret: config.sessionSecret,
+    secret: config.adminSessionSecret,
     resave: false, // Set to false to avoid deprecation warning
     saveUninitialized: false, // Set to false to avoid deprecation warning
   }));

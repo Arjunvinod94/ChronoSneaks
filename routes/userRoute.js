@@ -5,7 +5,7 @@ const session = require('express-session')
 //for session
 const config = require('../config/config')
 user_route.use(session({
-    secret: config.sessionSecret,
+    secret: config.userSessionSecret,
     resave: false, // Set to false to avoid deprecation warning
     saveUninitialized: false, // Set to false to avoid deprecation warning
   }));
