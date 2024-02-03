@@ -26,6 +26,7 @@ user_route.use(express.static('public'))
 
 const userController = require('../controllers/userController')
 const cartController = require('../controllers/cartController')
+const orderController = require('../controllers/orderController')
 
 user_route.get('/register',auth.isLogout,userController.loadRegister)
 
@@ -79,5 +80,12 @@ user_route.get('/home/products/sneakers/sneaker',auth.isLogin,userController.loa
 user_route.get('/shoppingCart',auth.isLogin,cartController.loadshoppingCart)
 user_route.post('/home/products/add-to-cart/:productId',auth.isLogin,cartController.userAddToCart)
 user_route.delete('/shoppingCart/:product_id',auth.isLogin,cartController.deleteCartItem);
+
+//cart chekout
+user_route.get('/shoppingCart/checkout',auth.isLogin,cartController.loadCheckout)
+//cart add address
+user_route.post('/shoppingCart/add-address',auth.isLogin,cartController.addAddress)
+//order confirmation
+user_route.post('/shoppingCart/checkout/confirmOrder',orderController.confirmOrder)
 
 module.exports = user_route

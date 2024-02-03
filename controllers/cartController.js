@@ -1,6 +1,7 @@
 const Cart = require('../models/cartModel')
 const User = require('../models/userModel')
 const Product = require('../models/productModel')
+const Address = require('../models/addressModel')
 
 const loadshoppingCart = async(req,res)=>{
     try {
@@ -189,6 +190,80 @@ const userAddToCart = async (req, res) => {
       }
     };
     
+const loadCheckout = async(req,res)=>{
+  try {
+    const userData = await User.findOne({_id: req.session.user_id})
+    const userCart = await Cart.findOne({_id: req.session.user_id}).populate(
+      'cart.product_id'
+  )
+  const userCartCount = userCart && userCart.cart ? userCart.cart.length : 0;
+  const addressData = await Address.findOne({user_id: req.session.user_id})
+  if(userCartCount > 0) {
+    res.render('checkout',{user: userData, userCart, addressData})
+  } else {
+    res.redirect('/shoppingCart')
+  }
+
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+const addAddress = async (req, res) => {
+  try {
+    const user_id = req.session.user_id
+    const user = await User.findById({ _id: user_id })
+    const userCart = await Cart.findOne({ _id: user_id })
+
+    const addressObj = {
+      name: req.body.name,
+      address: req.body.address,
+      city: req.body.city,
+      country: req.body.country,
+      zipcode: req.body.zipcode,
+      mobile: req.body.mobile,
+    
+    }
+
+    const data = await Address.findOne({user_id: user_id })
+    if (data) {
+
+      // var addAddress = []
+      // for(let i=0; i<data.address.length; i++) {
+      //   addAddress.push(data.address[i])
+      // }
+      // addAddress.push(req.body.address)
+      // const updated_data = await Address.findOneAndUpdate(
+      //   {user_id: user_id},
+      //   {$set:{address: addAddress}}
+      //   )
+
+      //   res.render('checkout', { updated_data, user, userCart, addressData: data})
+      //   console.log("address added to array");
+
+      await Address.findOneAndUpdate(
+        {user_id: user_id},
+        {$push:{address: addressObj}}
+      )
+      res.redirect('/shoppingCart/checkout')
+      console.log('added address to existing');
+
+    } else {
+      const address = new Address({
+        user_id: user_id,
+        // address: req.body.name + ", " + req.body.address + ", " + req.body.city + ", " + req.body.country + ", " + req.body.zipcode + ", " + req.body.mobile
+        address: addressObj
+      })
+      const addressData = await address.save()
+
+      res.redirect('/shoppingCart/checkout')
+      console.log("new address added");
+    }
+
+  } catch (error) {
+    res.status(400).send({ success: false, msg: error.message })
+  }
+}
       
 
 
@@ -197,4 +272,6 @@ module.exports = {
     loadshoppingCart,
     userAddToCart,
     deleteCartItem,
+    loadCheckout,
+    addAddress,
 }
