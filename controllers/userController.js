@@ -1,6 +1,7 @@
 const User = require('../models/userModel')
 const Product = require('../models/productModel')
 const Category = require('../models/categoryModel')
+const Address = require('../models/addressModel')
 const bcrypt = require("bcrypt")
 const randomstring = require('randomstring')
 const nodemailer = require("nodemailer")
@@ -353,7 +354,7 @@ const userLogout = async(req,res)=>{
 const editLoad = async(req,res)=>{
     try {
 
-        const id = req.query.id
+        const id = req.query.id || req.session.user_id
         const userData = await User.findById({ _id:id })
         
         if(userData) {
@@ -384,6 +385,106 @@ const loadUpdatePassword = async(req,res)=>{
         const userData = await User.find({_id: user_id})
 
         res.render('update-password',{user : userData})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const loadAddress = async(req,res)=>{
+    try {
+        const user_id = req.session.user_id
+        const userData = await User.find({_id: user_id})
+        const addressData = await Address.findOne({user_id: user_id})
+        res.render('address',{user: userData, addressData})
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const loadAddAddress = async(req,res)=>{
+    try {
+        user_id = req.session.user_id
+        userData = await User.findById({_id: user_id})
+
+        res.render('add-address',{user: user_id})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const verifyAddAddress = async(req,res)=>{
+    try {
+        const user_id = req.session.user_id
+        const addressObj = {
+            name: req.body.name,
+            address: req.body.address,
+            city: req.body.city,
+            state: req.body.state,
+            country: req.body.country,
+            zipcode: req.body.zipcode,
+            mobile: req.body.mobile,
+          }
+
+          const addressData = await Address.findOne({user_id: user_id})
+          if(addressData) {
+            await Address.findOneAndUpdate(
+                {user_id: user_id},
+                {$push: {address: addressObj}}
+            )
+            res.redirect('/edit/address')
+          } else {
+            const address = new Address({
+                user_id: user_id,
+                address: addressObj
+            })
+            const savedAddress = await address.save()
+            res.redirect('/edit/address')
+          }
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+// problems in edit address
+
+const loadEditAddress = async(req,res)=>{
+    try {
+        const user_id = req.session.user_id
+        const userData = await User.findById({_id: user_id})
+        const address = req.query.id
+        const addressData = await Address.findOne({'address.address': address})
+
+        res.render('edit-address',{user: userData, addressData})
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const deleteAddress = async(req,res)=>{
+    try {
+        const user_id = req.session.user_id
+        const address = req.query.id
+        const addressData = await Address.findOne({
+            user_id: user_id,
+        })
+        if(addressData) {
+            const deleteAddress = await Address.updateOne(
+                {user_id: user_id},
+                {$pull: {address: {address: address}}}
+            )
+            if(deleteAddress) {
+                res.redirect('/edit/address')
+            } else {
+                res.render('404')
+            }
+        } else {
+            console.log("couldn't find data");
+        }
+
+        
     } catch (error) {
         console.log(error.message);
     }
@@ -581,6 +682,12 @@ module.exports = {
     updateProfile,
     loadUpdatePassword,
     verifyUpdatePassword,
+    loadAddress,
+    loadAddAddress,
+    verifyAddAddress,
+    loadEditAddress,
+    deleteAddress,
+
     loadVerify,
     loadWatchCategory,
     loadSneakerCategory,

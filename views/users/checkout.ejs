@@ -29,13 +29,23 @@
                             <input type="text" class="form-control" id="user_city" name="city" value="" required>
                          </div>
                       </div>
-                      <div class="form-group">
+                      <div class="checkout-country-code clearfix">
+                         <div class="form-group">
+                            <label for="user_post_code">State</label>
+                            <input type="text" class="form-control" id="user_state" name="state" value="" required>
+                         </div>
+                         <div class="form-group" >
+                            <label for="user_city">Country</label>
+                            <input type="text" class="form-control" id="user_country" name="country" value="" required>
+                         </div>
+                      </div>
+                      <!-- <div class="form-group">
                          <label for="user_country">Country</label>
                          <input type="text" class="form-control" id="user_country" name="country" placeholder="" required>
-                      </div>
+                      </div> -->
                       <div class="form-group">
                          <label for="user_mobile">Mobile</label>
-                         <input type="tel" class="form-control" id="mobile" name="user_mobile" placeholder="" oninput="validateMobile(this)" required>
+                         <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="" oninput="validateMobile(this)" required>
                       </div>
                       <button type="submit" class="btn btn-secondary mt-20 border" style="border-color: #000000; border-radius: 0%;">Add Address</button>
                    </form>
@@ -77,6 +87,7 @@
                                         <h5>Name: <%= address.name %></h5>
                                         <h5>Address: <%= address.address %></h5>
                                         <h5>City: <%= address.city %></h5>
+                                        <h5>State: <%= address.state %></h5>
                                         <h5>Country: <%= address.country %></h5>
                                         <h5>Zipcode: <%= address.zipcode %></h5>
                                         <h5>Mobile: <%= address.mobile %></h5>

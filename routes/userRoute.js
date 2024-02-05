@@ -62,6 +62,17 @@ user_route.post('/edit',userController.updateProfile)
 user_route.get('/edit/update-password',auth.isLogin, userController.loadUpdatePassword)
 user_route.post('/edit/update-password',userController.verifyUpdatePassword)
 
+//address menu
+user_route.get('/edit/address',auth.isLogin, userController.loadAddress)
+user_route.get('/edit/address/add-address',auth.isLogin, userController.loadAddAddress)
+user_route.post('/edit/address/add-address', userController.verifyAddAddress)
+
+user_route.get('/edit/address/edit-address', auth.isLogin, userController.loadEditAddress);
+// user_route.post('/edit/address/edit-address', userController.verifyEditAddress);
+
+user_route.get('/edit/address/delete-address', auth.isLogin, userController.deleteAddress);
+
+
 //otp page
 user_route.get('/verifyotp',auth.isLogout,userController.loadVerify)
 user_route.post('/verifyotp',userController.verifyOTP)

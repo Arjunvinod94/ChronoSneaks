@@ -219,6 +219,7 @@ const addAddress = async (req, res) => {
       name: req.body.name,
       address: req.body.address,
       city: req.body.city,
+      state: req.body.state,
       country: req.body.country,
       zipcode: req.body.zipcode,
       mobile: req.body.mobile,
@@ -246,7 +247,6 @@ const addAddress = async (req, res) => {
         {$push:{address: addressObj}}
       )
       res.redirect('/shoppingCart/checkout')
-      console.log('added address to existing');
 
     } else {
       const address = new Address({
@@ -257,7 +257,6 @@ const addAddress = async (req, res) => {
       const addressData = await address.save()
 
       res.redirect('/shoppingCart/checkout')
-      console.log("new address added");
     }
 
   } catch (error) {
