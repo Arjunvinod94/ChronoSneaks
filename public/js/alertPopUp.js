@@ -61,3 +61,10 @@ function confirmDelete(event){
         event.preventDefault()
     }
 }
+
+function confirmCancelOrder(event){
+    const isConfirmed = confirm('Are you sure you want to cancel this order?')
+    if(!isConfirmed){
+        event.preventDefault()
+    }
+}

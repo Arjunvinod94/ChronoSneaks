@@ -1,0 +1,79 @@
+<%- include('../layouts/header.ejs') %>
+
+<section class="user-dashboard page-wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="list-inline dashboard-menu text-center">
+                    <li><a href="/edit?id=<%= user._id %>">Profile Details</a></li>
+                    <li><a href="/edit/address">Address</a></li>
+                    <li><a class="active" href="/home/myOrders">Orders</a></li>
+                  </ul>
+				<div class="dashboard-wrapper user-dashboard">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Order ID</th>
+									<th>Date</th>
+									<th>Items</th>
+									<th>Total Price</th>
+									<th>Address</th>
+									<th>Payment Method</th>
+									<th>Status</th>
+									<th></th>
+								</tr>
+							</thead>
+							<!-- <tbody>
+								<% if (orderData.length > 0) { %>
+									<% orderData.forEach(order => { %>
+										<% order.items.forEach(item => { %>
+											<tr>
+												<td><%= order._id %></td>
+												<td><%= order.orderDate.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) %></td>
+												<td><%= item.name %></td>
+												<td><%= order.totalAmount %></td>
+												<td><%= order.orderAddress %></td>
+												<td><%= order.paymentMethod %></td>
+												<td><span class="label label-primary"><%= order.status %></span></td>
+												<td><a href="order.html" class="btn btn-default">Action</a></td>
+											</tr>
+										<% }); %>
+									<% }); %>
+								<% } else { %>
+									<p>No Items</p>
+								<% } %>
+							</tbody> -->
+
+
+							<tbody>
+								<% if (orderData.length > 0) { %>
+									<% orderData.forEach(order => { %>
+										<tr>
+											<td><%= order._id %></td>
+											<td><%= order.orderDate.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) %></td>
+											<td><%= order.items.map(item => item.name).join(', ') %></td>
+											<td><%= order.totalAmount %></td>
+											<td><%= order.orderAddress %></td>
+											<td><%= order.paymentMethod %></td>
+											<td><span class="label label-primary"><%= order.status %></span></td>
+											<td><a href="/home/myOrders/cancel?id=<%= order._id %>" class="btn btn-danger" onclick="confirmCancelOrder(event)">Cancel</a></td>
+										</tr>
+									<% }); %>
+								<% } else { %>
+									<p>No Items</p>
+								<% } %>
+							</tbody>
+							
+							
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script src="/js/alertPopUp.js"></script>
+
+<%- include('../layouts/footer.ejs') %>

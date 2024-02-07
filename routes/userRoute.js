@@ -97,6 +97,10 @@ user_route.get('/shoppingCart/checkout',auth.isLogin,cartController.loadCheckout
 //cart add address
 user_route.post('/shoppingCart/add-address',auth.isLogin,cartController.addAddress)
 //order confirmation
-user_route.post('/shoppingCart/checkout/confirmOrder',orderController.confirmOrder)
+user_route.post('/shoppingCart/checkout/confirmOrder',auth.isLogin,orderController.confirmOrder)
+
+//user orders
+user_route.get('/home/myOrders',auth.isLogin, userController.loadMyOrders)
+user_route.get('/home/myOrders/cancel',auth.isLogin, userController.loadCancelOrder)
 
 module.exports = user_route

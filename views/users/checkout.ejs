@@ -82,7 +82,9 @@
                         <div class="form-group">
                             <% if (addressData && addressData.address && addressData.address.length > 0) { %>
                                 <% addressData.address.forEach(address => { %>
-                                    <input type="radio" name="address" id="<%= address.id %>" required>
+                                    <input type="radio" name="address" id="<%= address.id %>" 
+                                    value="<%= address.name + " " + address.address + " " + address.city + " " + address.state + " " + address.country + " " + address.zipcode + " " + address.mobile %>" required>
+                                    
                                     <label for="<%= address.id %>">
                                         <h5>Name: <%= address.name %></h5>
                                         <h5>Address: <%= address.address %></h5>
@@ -108,11 +110,11 @@
                    <div class="checkout-product-details">
                       <div class="payment">
                         <div class="form-group">
-                            <input type="radio" name="payment" id="" required>
+                            <input type="radio" name="payment" id="" value="card" required>
                             <label for=""><h5>Credit / Debit Card</h5></label><br>
-                            <input type="radio" name="payment" id="">
+                            <input type="radio" name="payment" id="" value="razoray">
                             <label for=""><h5>RazorPay</h5></label><br>
-                            <input type="radio" name="payment" id="">
+                            <input type="radio" name="payment" id="" value="cashOnDelivery">
                             <label for=""><h5>Cash On Delivery</h5></label><br>
                           </div>
                       </div>

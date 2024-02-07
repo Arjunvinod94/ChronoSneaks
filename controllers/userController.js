@@ -2,6 +2,8 @@ const User = require('../models/userModel')
 const Product = require('../models/productModel')
 const Category = require('../models/categoryModel')
 const Address = require('../models/addressModel')
+const Order = require('../models/orderModel')
+
 const bcrypt = require("bcrypt")
 const randomstring = require('randomstring')
 const nodemailer = require("nodemailer")
@@ -532,6 +534,35 @@ const verifyUpdatePassword = async (req, res) => {
     }
 };
 
+//my orders
+const loadMyOrders = async(req,res)=>{
+    try {
+        const user_id = req.session.user_id
+        const userData = await User.findById({_id: user_id})
+        const orderData = await Order.find({customer: user_id})
+        // console.log(user_id, orderData);
+        res.render('my-orders',{user: userData, orderData})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const loadCancelOrder = async(req,res)=>{
+    try {
+        const product_id = req.query.id
+
+        if(product_id) {
+            await Order.updateOne({_id: product_id},{$set:{status: 'Cancelled'}})
+            res.redirect('/home/myOrders')
+        } else {
+            res.redirect('/home/myOrders')
+            console.log('Unable to cancel product');
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 //otp verification
 const loadVerify = async(req,res)=>{
@@ -687,6 +718,8 @@ module.exports = {
     verifyAddAddress,
     loadEditAddress,
     deleteAddress,
+    loadMyOrders,
+    loadCancelOrder,
 
     loadVerify,
     loadWatchCategory,
