@@ -6,7 +6,7 @@ const path = require("path");
 
 const loadProduct = async(req,res)=>{
     try {
-        const userData = await User.findById({_id:req.session.user_id})
+        const userData = await User.findById({_id:req.session.admin_id})
         const usersData = await User.find({is_admin:0})
         const ProductData = await Product.find({}).populate('category')
         if(ProductData) {
@@ -19,7 +19,7 @@ const loadProduct = async(req,res)=>{
 
 const loadAddNewProduct = async(req,res)=>{
     try {
-        const userData = await User.findById({_id:req.session.user_id})
+        const userData = await User.findById({_id:req.session.admin_id})
         const usersData = await User.find({is_admin:0})
         const category = await Category.find({})
         const ProductData = await Product.find({})
@@ -113,7 +113,7 @@ const deleteProduct = async(req,res)=>{
 
 const editProductLoad = async(req,res)=>{
     try {
-        const userData = await User.findById({_id:req.session.user_id})
+        const userData = await User.findById({_id:req.session.admin_id})
         const usersData = await User.find({is_admin:0})
         const id = req.query.id
 
@@ -183,7 +183,7 @@ const updateEditProduct = async(req,res)=>{
 const adminSingleProductView = async(req,res)=>{
     try {
         const id = req.query.id
-        const userData = await User.findById({_id:req.session.user_id})
+        const userData = await User.findById({_id:req.session.admin_id})
         const usersData = await User.find({is_admin:0})
         const ProductData = await Product.findById(id)
         const category = await Category.find({})

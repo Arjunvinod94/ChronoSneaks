@@ -25,6 +25,7 @@ const auth = require('../middleware/adminAuth')
 const adminController = require('../controllers/adminController')
 const categoryController = require('../controllers/categoryController')
 const productController = require('../controllers/productController')
+const orderController = require('../controllers/orderController')
 
 // Define storage for product images
 const storage = multer.diskStorage({
@@ -91,6 +92,11 @@ admin_route.get('/products/view-product',auth.isLogin,productController.adminSin
 admin_route.get('/products/edit-product',auth.isLogin,productController.editProductLoad)
 admin_route.post('/products/edit-product',upload.array('images'),productController.updateEditProduct)
 admin_route.get('/products/delete-product',auth.isLogin,productController.deleteProduct)
+
+//order page 
+admin_route.get('/orders',auth.isLogin, orderController.loadAdminOrders)
+admin_route.post('/orders',auth.isLogin, orderController.updateAdminOrders)
+
 //always loaad admin when wrong route is entered (used last)
 admin_route.get('*',(req,res)=>{
     res.redirect('/admin')

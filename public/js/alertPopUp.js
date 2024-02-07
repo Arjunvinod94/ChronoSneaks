@@ -68,3 +68,11 @@ function confirmCancelOrder(event){
         event.preventDefault()
     }
 }
+
+function confirmContinue(event){
+    const isConfirmed = confirm('Are you sure you want to continue?')
+    if(!isConfirmed){
+        event.preventDefault()
+    }
+}
+

@@ -4,7 +4,7 @@ const categoryModel = require('../models/categoryModel')
 
 const loadCategory = async(req,res)=>{
     try {
-        const userData = await User.findById({_id:req.session.user_id})
+        const userData = await User.findById({_id:req.session.admin_id})
         const usersData = await User.find({is_admin:0})
         const CategoryData = await Category.find({})
         if(CategoryData){
@@ -17,7 +17,7 @@ const loadCategory = async(req,res)=>{
 
 const loadAddNewCategory = async(req,res)=>{
     try {
-        const userData = await User.findById({_id:req.session.user_id})
+        const userData = await User.findById({_id:req.session.admin_id})
         const usersData = await User.find({is_admin:0})
 
         res.render('new-category',{users:usersData, admin:userData})
@@ -55,7 +55,7 @@ const verifyAddNewCategory = async(req,res)=>{
 
 const editCategoryLoad = async(req,res)=>{
     try {
-        const userData = await User.findById({_id:req.session.user_id})
+        const userData = await User.findById({_id:req.session.admin_id})
         const usersData = await User.find({is_admin:0})
         const id = req.query.id
 

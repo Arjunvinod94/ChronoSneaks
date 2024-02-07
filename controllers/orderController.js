@@ -96,11 +96,35 @@ const confirmOrder = async (req, res) => {
     }
 };
 
+const loadAdminOrders = async(req,res)=>{
+    try {
+        const userData = await User.findById({_id:req.session.admin_id})
+        const usersData = await User.find({is_admin:0})
+        const orderData = await Order.find({})
+            res.render('orders',{users:userData,admin:usersData, orderData})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
-
-
+const updateAdminOrders = async(req,res)=>{
+    try {
+        
+        const user_id = req.body.id
+        const status = req.body.status
+        
+        const orderData = await Order.updateOne({_id: user_id},{$set:{status: status}})
+        if(orderData) {
+            res.redirect('/admin/orders')
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 
 module.exports = {
-    confirmOrder
+    confirmOrder,
+    loadAdminOrders,
+    updateAdminOrders,
 }
